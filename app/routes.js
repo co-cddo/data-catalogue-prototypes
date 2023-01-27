@@ -54,8 +54,8 @@ const helpers = {
     getOrgTitle(id) {
         let name;
         for (let i = 0; i < global.organisations.length; i++) {
-            if (global.organisations[i][id] == id) {
-                name = global.organisations[i][name];
+            if (global.organisations[i]['id'] == id) {
+                name = global.organisations[i]['name'];
                 break;
             }
         }
