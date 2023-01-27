@@ -8,8 +8,10 @@ const router = govukPrototypeKit.requests.setupRouter()
 const { promises: fs } = require("fs");
 
 const init =  async function() {
-   const resources = await helpers.getData('./app/data/resources.json');
-   console.log(resources);
+   let resources = await helpers.getData('./app/data/resources.json');
+   const nhs = await helpers.getData('./app/data/nhs.json');
+   const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'National Health Service');
+   resources = resources.concat(mappedNhs);
    
    // SPRINT 1 ROUTES
    router.get('/s1/find', function(req, res) {    
@@ -27,6 +29,17 @@ const helpers = {
         } catch (error) {
             console.log("e", error);
         }
+    },
+    mapLiveSchemaToSpec(data, orgName) {
+        return data.map(function(e) {
+            e.issuing_body = e.data.organisation;
+            e.title = e.data.name;
+            e.description = e.data.description;
+            // This is a cheat so I don't have to set up a proper org entity
+            e.issuing_body_readable = orgName;
+            return e;
+        }
+        )
     }
 }
 

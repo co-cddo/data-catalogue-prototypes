@@ -29,6 +29,7 @@
       "time_coverage_to": "",
       "time_coverage_from": "",
       "topic": "Example topic",
-      "type": "Data Service"
+      "type": "Data Service",
+      "issuing_body_readable": "Ordnance Survey"
     }
   ]

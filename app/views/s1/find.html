@@ -17,9 +17,17 @@
       <pre>
         {{ resources | dump }}
       </pre>
-      <ul>
+      <ul class="govuk-list">
           {% for resource in resources %}
-            <li>{{ resource.title}}</li>
+            <li>
+                <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#" class="govuk-link">{{ resource.title}}</a>
+                    <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
+                        <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
+                    </p>
+                    <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
+                        {{ resource.description }}
+                    </p>
+                </li>
           {% endfor %}
       </ul>
     </div>
