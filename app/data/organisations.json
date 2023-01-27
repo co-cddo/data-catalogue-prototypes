@@ -1,0 +1,182 @@
+[
+    {
+      "id": "government-digital-service",
+      "name": "Government Digital Service",
+      "alternateName": "GDS",
+      "url": ""
+    },
+    {
+      "id": "office-of-national-statistics",
+      "name": "Office for National Statistics",
+      "alternateName": "ONS",
+      "url": ""
+    },
+    {
+      "id": "driver-and-vehicle-licensing-agency",
+      "name": "Driver and Vehicle Licensing Agency",
+      "alternateName": "DVLA",
+      "url": ""
+    },
+    {
+      "id": "companies-house",
+      "name": "Companies House",
+      "alternateName": "CH",
+      "url": ""
+    },
+    {
+      "id": "ordnance-survey",
+      "name": "Ordnance Survey",
+      "alternateName": "OS",
+      "url": ""
+    },
+    {
+      "id": "environment-agency",
+      "name": "Environment Agency",
+      "alternateName": "EA",
+      "url": ""
+    },
+    {
+      "id": "scottish-government",
+      "name": "Scottish Government",
+      "alternateName": "Scot",
+      "url": ""
+    },
+    {
+      "id": "department-for-education",
+      "name": "Department for Education",
+      "alternateName": "DfE",
+      "url": ""
+    },
+    {
+      "id": "department-for-work-and-pensions",
+      "name": "Department for Work and Pensions",
+      "alternateName": "DWP",
+      "url": ""
+    },
+    {
+      "id": "london-borough-of-hackney",
+      "name": "London Borough of Hackney",
+      "alternateName": "Hackney",
+      "url": ""
+    },
+    {
+      "id": "local-government-association",
+      "name": "Local Government Association",
+      "alternateName": "LGA",
+      "url": ""
+    },
+    {
+      "id": "west-berkshire-council",
+      "name": "West Berkshire Council",
+      "alternateName": "WBerks",
+      "url": ""
+    },
+    {
+      "id": "hm-revenue-customs",
+      "name": "HM Revenue & Customs",
+      "alternateName": "HMRC",
+      "url": ""
+    },
+    {
+      "id": "uk-hydrographic-office",
+      "name": "UK Hydrographic Office",
+      "alternateName": "UKHO",
+      "url": ""
+    },
+    {
+      "id": "department-for-international-trade",
+      "name": "Department for International Trade",
+      "alternateName": "DIT",
+      "url": ""
+    },
+    {
+      "id": "west-midlands-combined-authority",
+      "name": "West Midlands Combined Authority",
+      "alternateName": "WMCA",
+      "url": ""
+    },
+    {
+      "id": "the-national-archives",
+      "name": "The National Archives",
+      "alternateName": "TNA",
+      "url": ""
+    },
+    {
+      "id": "ministry-of-justice",
+      "name": "Ministry of Justice",
+      "alternateName": "MOJ",
+      "url": ""
+    },
+    {
+      "id": "transport-for-london",
+      "name": "Transport for London",
+      "alternateName": "TfL",
+      "url": ""
+    },
+    {
+      "id": "uk-police",
+      "name": "UK Police",
+      "alternateName": "UKP",
+      "url": ""
+    },
+    {
+      "id": "department-for-levelling-up-housing-and-communities",
+      "name": "Department for Levelling Up, Housing and Communities",
+      "alternateName": "DLUHC",
+      "url": "https://www.gov.uk/government/organisations/department-for-levelling-up-housing-and-communities"
+    },
+    {
+      "id": "defra",
+      "name": "Department for Environment, Food and Rural Affairs",
+      "alternateName": "Defra",
+      "url": "https://www.gov.uk/government/organisations/department-for-environment-food-rural-affairs"
+    },
+    {
+      "id": "buckinghamshire-council",
+      "name": "Buckinghamshire Council",
+      "alternateName": "BCC",
+      "url": "https://www.buckinghamshire.gov.uk"
+    },
+    {
+      "id": "Insolvency-service",
+      "name": "Insolvency Service",
+      "alternateName": "IS",
+      "url": "www.insolvency.gov.uk"
+    },
+    {
+      "id": "home-office",
+      "name": "Home Office",
+      "alternateName": "HO",
+      "url": "https://www.gov.uk/government/organisations/home-office"
+    },
+    {
+      "id": "department-for-transport",
+      "name": "Department for Transport",
+      "alternateName": "DfT",
+      "url": "https://www.gov.uk/government/organisations/department-for-transport"
+    },
+    {
+      "id": "the-apprenticeship-service",
+      "name": "The Apprenticeship Service",
+      "alternateName": "TAS",
+      "url": ""
+    },
+    {
+      "id": "cefas",
+      "name": "Centre for Environment, Fisheries and Aquaculture",
+      "alternateName": "Cefas",
+      "url": "https://www.cefas.co.uk"
+    },
+    {
+      "id": "bgs",
+      "name": "British Geological Survey",
+      "alternateName": "BGS",
+      "url": "https://www.bgs.ac.uk/"
+    },
+    {
+      "id": "hm-land-registry",
+      "name": "HM Land Registry",
+      "alternateName": "HMLR",
+      "url": "https://www.gov.uk/government/organisations/land-registry"
+    }
+  ]
