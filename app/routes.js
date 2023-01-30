@@ -20,20 +20,39 @@ const init =  async function() {
    const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'National Health Service');
    resources = resources.concat(mappedNhs, mappedCatalogue);
 
-   const items = searchSetup(resources);
+   const index = searchSetup(resources);
    
    // SPRINT 1 ROUTES
    router.get('/s1/find', function(req, res) {  
     let items = resources;  
-    let query = '';
-    console.log(req.query);
-    if (req.query) {
-        query = req.query.q;
-        items = search(query);
+    let searchTerm;
+    let appliedFilters = {};
+    if (Object.keys(req.query).length !== 0) {
+        if(req.query.q) {
+            searchTerm = req.query.q;
+        }
+        if(Array.isArray(req.query.organisationFilters)) {
+            appliedFilters.issuing_body = req.query.organisationFilters.filter(function(e) {
+                if(e == '_unchecked') {
+                    return false;
+                }
+                return true;
+            })
+        }
+        const results = search(searchTerm, appliedFilters);
+        items = results.data.items;
     }
+
+    const filters = [
+        {
+            title: 'Organisations',
+            id: 'organisationFilters',
+            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', req),
+        }
+    ]
     
     const count = items.length;
-    res.render("s1/find", { resources: items, count: count, query: query });
+    res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
    })
 }
 
@@ -58,17 +77,16 @@ const searchSetup = function(data) {
     return itemsjs.search();
 }
 
-const search = function(query) {
+const search = function(query, filters) {
     const results = itemsjs.search({
+        per_page: 1000,
         sort: 'name_dsc',
-        query: query
-        // filters: {
-        //   tags: ['1980s']
-        // }
+        query: query,
+        filters: filters
     });
     // console.log(JSON.stringify(results, null, 2));
     
-    return results.data.items;
+    return results;
 }
 
 const helpers = {
@@ -87,15 +105,30 @@ const helpers = {
                 e.title = e.data.name;
                 e.description = e.data.description;
                 e.issuing_body_readable = e.data.organisation;
+                e.issuing_body = 'nhs-digital';
             }
             else {
                 e.title = e.name;
                 e.description = e.description;
+                e.issuing_body = e.provider;
                 e.issuing_body_readable = helpers.getOrgTitle(e.provider);
             }
             return e;
         }
         )
+    },
+    generateFilterItems(items, valueKey, textKey, groupId, req) {
+        const query = req.query;
+        return items.map(function(e) {
+            let n = {};
+            n.value = e[valueKey];
+            n.text = e[textKey];
+            n.name = groupId;
+            if(query && query[groupId] && query[groupId].includes(n.value)) {
+                n.checked = 'checked'
+            }
+            return n;
+        });
     },
     getOrgTitle(id) {
         let name;
