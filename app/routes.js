@@ -6,6 +6,9 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 const { promises: fs } = require("fs");
+let itemsjs;
+let items;
+
 let global = {};
 
 const init =  async function() {
@@ -16,14 +19,57 @@ const init =  async function() {
    const nhs = await helpers.getData('./app/data/nhs.json');
    const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'National Health Service');
    resources = resources.concat(mappedNhs, mappedCatalogue);
+
+   const items = searchSetup(resources);
    
    // SPRINT 1 ROUTES
-   router.get('/s1/find', function(req, res) {    
-    const count = resources.length;
-    res.render("s1/find", { resources: resources, count: count });
+   router.get('/s1/find', function(req, res) {  
+    let items = resources;  
+    let query = '';
+    console.log(req.query);
+    if (req.query) {
+        query = req.query.q;
+        items = search(query);
+    }
+    
+    const count = items.length;
+    res.render("s1/find", { resources: items, count: count, query: query });
    })
 }
 
+const searchSetup = function(data) {
+    const configuration = {
+        sortings: {
+            name_dsc: {
+            field: 'title',
+            order: 'dsc'
+            }
+        },
+        aggregations: {
+            issuing_body: {
+                title: 'Organisations',
+                size: 30,
+                conjunction: false
+            }
+        },
+        searchableFields: ['title', 'description' ,'issuing_body_readable'],
+    };
+    itemsjs = require('itemsjs')(data, configuration);
+    return itemsjs.search();
+}
+
+const search = function(query) {
+    const results = itemsjs.search({
+        sort: 'name_dsc',
+        query: query
+        // filters: {
+        //   tags: ['1980s']
+        // }
+    });
+    // console.log(JSON.stringify(results, null, 2));
+    
+    return results.data.items;
+}
 
 const helpers = {
     async getData(path) {
