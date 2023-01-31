@@ -14,7 +14,7 @@ let global = {};
 const init =  async function() {
    global.organisations = await helpers.getData('./app/data/organisations.json');
    global.topics = await helpers.getData('./app/data/topics.json');
-   let resources = await helpers.getData('./app/data/resources.json');
+   let resources = [];
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
@@ -120,22 +120,32 @@ const helpers = {
     },
     mapLiveSchemaToSpec(data, issuing_body, topic) {
         return data.map(function(e) {
+            let n = {};
             if(e.data) {
-                e.title = e.data.name;
-                e.description = e.data.description;
-                e.issuing_body_readable = e.data.organisation;
-                e.issuing_body = issuing_body;
-                e.topic = topic;
+                n.title = e.data.name;
+                n.description = e.data.description;
+                n.issuing_body_readable = e.data.organisation;
+                n.issuing_body = issuing_body;
+                n.topic = helpers.generateTopics(topic);
             }
             else {
-                e.title = e.name;
-                e.description = e.description;
-                e.issuing_body = e.provider;
-                e.issuing_body_readable = helpers.getOrgTitle(e.provider);
+                n.title = e.name;
+                n.description = e.description;
+                n.issuing_body = e.provider;
+                n.issuing_body_readable = helpers.getOrgTitle(e.provider);
+                n.topic = helpers.generateTopics(e.topic);
             }
-            return e;
+            return n;
         }
         )
+    },
+    generateTopics(string) {
+        const topics = [].concat(string.split(','));
+        return topics.map(function(e) {
+            const newTopics = global.topics.find(element => element.id == e);
+            return newTopics;
+        });
+
     },
     generateFilterItems(items, valueKey, textKey, groupId, req) {
         const query = req.query;
