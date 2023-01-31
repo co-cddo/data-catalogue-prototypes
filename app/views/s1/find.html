@@ -15,46 +15,46 @@
     Find Data Services
 </h1>
 <form action="/s1/find" method="GET" >
-    <div class="govuk-form-group">
-        <label for="search" class="govuk-label">Search the Data Catalogue</label>
-        <input enterkeyhint="search" class="govuk-input" id="search" name="q" title="Search" type="search" value="{{ query }}">
-        <button class="govuk-button" type="submit" enterkeyhint="search">Search</button> 
+    <div class="govuk-grid-row">
+        <div class="govuk-form-group">
+            <label for="search" class="govuk-label">Search the Data Catalogue</label>
+            <input enterkeyhint="search" class="govuk-input" id="search" name="q" title="Search" type="search" value="{{ query }}">
+            <button class="govuk-button" type="submit" enterkeyhint="search">Search</button> 
+        </div>
     </div>
-</form>
-<!-- {{ filters | dump }} -->
-<div class="govuk-grid-row">
-    <form action="/s1/find" method="GET" class="govuk-grid-column-one-third">
-        <h1 class="govuk-heading-m">
-            Apply filters
-        </h1>
-        <button class="govuk-button app-no-js-only" data-module="govuk-button">
-            Apply filters
-          </button>
-        {% for filter in filters %}
-            <div class="govuk-form-group">
-                {{ govukCheckboxes({
-                    name: filter.title,
-                    classes: "govuk-checkboxes--small js-auto-submit",
-                    attributes: {
-                        "id": filter.id
-                      },
-                    fieldset: {
-                      legend: {
-                        text: filter.title,
-                        classes: "govuk-fieldset__legend--s"
-                      }
-                    },
-                    items: filter.items
-                  }) }}
-            </div>
-        {% endfor %}
-    </form>
-    <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-heading-l">{{ count }} results</p>
-      <ul class="govuk-list" data-module="edge">
-          {% for resource in resources %}
-            <li class="result-list__item">
-                <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#" class="govuk-link">{{ resource.title}}</a></h2>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <h1 class="govuk-heading-m">
+                Apply filters
+            </h1>
+            <button class="govuk-button app-no-js-only" data-module="govuk-button">
+                Apply filters
+                </button>
+            {% for filter in filters %}
+                <div class="govuk-form-group">
+                    {{ govukCheckboxes({
+                        name: filter.title,
+                        classes: "govuk-checkboxes--small js-auto-submit",
+                        attributes: {
+                            "id": filter.id
+                            },
+                        fieldset: {
+                            legend: {
+                            text: filter.title,
+                            classes: "govuk-fieldset__legend--s"
+                            }
+                        },
+                        items: filter.items
+                        }) }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-heading-l">{{ count }} results</p>
+            <ul class="govuk-list" data-module="edge">
+                {% for resource in resources %}
+                <li class="result-list__item">
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#" class="govuk-link">{{ resource.title}}</a></h2>
                     <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
                         <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
                     </p>
@@ -62,9 +62,10 @@
                         {{ resource.description }}
                     </p>
                 </li>
-          {% endfor %}
-      </ul>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-</div>
+</form>
 
 {% endblock %}
