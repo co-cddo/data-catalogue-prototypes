@@ -1,0 +1,67 @@
+[
+    {
+      "name": "Business and economy",
+      "id": "business%20and%20economy",
+      "description": "Small businesses, industry, imports, exports and trade"
+    },
+    {
+      "name": "Government",
+      "id": "government",
+      "description": "Staff numbers and pay, local councillors and department business plans"
+    },
+    {
+      "name": "Towns and cities",
+      "id": "towns%20and%20cities",
+      "description": "Includes housing, urban planning, leisure, waste and energy, consumption"
+    },
+    {
+      "name": "Crime and justice",
+      "id": "crime%20and%20justice",
+      "description": "Courts, police, prison, offenders, borders and immigration"
+    },
+    {
+      "name": "Government spending",
+      "id": "government%20spending",
+      "description": "Includes all payments by government departments over £25,000"
+    },
+    {
+      "name": "Transport",
+      "id": "transport",
+      "description": "Airports, roads, freight, electric vehicles, parking, buses and footpaths"
+    },
+    {
+      "name": "Defence",
+      "id": "defence",
+      "description": "Armed forces, health and safety, search and rescue"
+    },
+    {
+      "name": "Health",
+      "id": "health",
+      "description": "Includes smoking, drugs, alcohol, medicine performance and hospitals"
+    },
+    {
+      "name": "Digital service performance",
+      "id": "digital%20service%20performance",
+      "description": "Cost, usage, completion rate, digital take-up, satisfaction"
+    },
+    {
+      "name": "Education",
+      "id": "education",
+      "description": "Students, training, qualifications and the National Curriculum"
+    },
+    {
+      "name": "Mapping",
+      "id": "mapping",
+      "description": "Addresses, boundaries, land ownership, aerial photographs, seabed and land terrain"
+    },
+    {
+      "name": "Government reference data",
+      "id": "government%20reference%20data",
+      "description": "Trusted data that is referenced and shared across government departments"
+    },
+    {
+      "name": "Society",
+      "id": "society",
+      "description": "Employment, benefits, household finances, poverty and population"
+    }
+  ]

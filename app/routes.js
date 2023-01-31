@@ -13,11 +13,12 @@ let global = {};
 
 const init =  async function() {
    global.organisations = await helpers.getData('./app/data/organisations.json');
+   global.topics = await helpers.getData('./app/data/topics.json');
    let resources = await helpers.getData('./app/data/resources.json');
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
-   const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'National Health Service');
+   const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
    resources = resources.concat(mappedNhs, mappedCatalogue);
 
    const index = searchSetup(resources);
@@ -39,11 +40,24 @@ const init =  async function() {
                 return true;
             })
         }
+        if(Array.isArray(req.query.topicFilters)) {
+            appliedFilters.topic = req.query.topicFilters.filter(function(e) {
+                if(e == '_unchecked') {
+                    return false;
+                }
+                return true;
+            })
+        }
         const results = search(searchTerm, appliedFilters);
         items = results.data.items;
     }
 
     const filters = [
+        {
+            title: 'Topics',
+            id: 'topicFilters',
+            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', req),
+        },
         {
             title: 'Organisations',
             id: 'organisationFilters',
@@ -67,6 +81,11 @@ const searchSetup = function(data) {
         aggregations: {
             issuing_body: {
                 title: 'Organisations',
+                size: 30,
+                conjunction: false
+            },
+            topic: {
+                title: 'Topics',
                 size: 30,
                 conjunction: false
             }
@@ -99,13 +118,14 @@ const helpers = {
             console.log("e", error);
         }
     },
-    mapLiveSchemaToSpec(data) {
+    mapLiveSchemaToSpec(data, issuing_body, topic) {
         return data.map(function(e) {
             if(e.data) {
                 e.title = e.data.name;
                 e.description = e.data.description;
                 e.issuing_body_readable = e.data.organisation;
-                e.issuing_body = 'nhs-digital';
+                e.issuing_body = issuing_body;
+                e.topic = topic;
             }
             else {
                 e.title = e.name;
