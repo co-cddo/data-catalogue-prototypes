@@ -61,10 +61,12 @@
                     </p>
                     {% if resource.topic|length %}
                         {% for topic in resource.topic %}
-                            {{ govukTag({
-                                text: topic.name,
-                                classes: "govuk-tag--grey"
-                            }) }}
+                        {% if topic|length %}
+                                {{ govukTag({
+                                    text: topic.name,
+                                    classes: "govuk-tag--grey"
+                                }) }}
+                                {% endif %}
                         {% endfor %}
                     {% endif %}
                     <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
