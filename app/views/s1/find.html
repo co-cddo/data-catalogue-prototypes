@@ -1,0 +1,71 @@
+{% extends "layouts/main.html" %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% block pageTitle %}
+  Find Data Services - Sprint 1
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="/s1/start">Back</a>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+    Find Data Services
+</h1>
+<form action="/s1/find" method="GET" >
+    <div class="govuk-grid-row">
+        <div class="govuk-form-group">
+            <label for="search" class="govuk-label">Search the Data Catalogue</label>
+            <input enterkeyhint="search" class="govuk-input" id="search" name="q" title="Search" type="search" value="{{ query }}">
+            <button class="govuk-button" type="submit" enterkeyhint="search">Search</button> 
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <h1 class="govuk-heading-m">
+                Apply filters
+            </h1>
+            <button class="govuk-button app-no-js-only" data-module="govuk-button">
+                Apply filters
+                </button>
+            {% for filter in filters %}
+                <div class="govuk-form-group">
+                    {{ govukCheckboxes({
+                        name: filter.title,
+                        classes: "govuk-checkboxes--small js-auto-submit",
+                        attributes: {
+                            "id": filter.id
+                            },
+                        fieldset: {
+                            legend: {
+                            text: filter.title,
+                            classes: "govuk-fieldset__legend--s"
+                            }
+                        },
+                        items: filter.items
+                        }) }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-heading-l">{{ count }} results</p>
+            <ul class="govuk-list" data-module="edge">
+                {% for resource in resources %}
+                <li class="result-list__item">
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#" class="govuk-link">{{ resource.title}}</a></h2>
+                    <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
+                        <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
+                    </p>
+                    <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
+                        {{ resource.description }}
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
