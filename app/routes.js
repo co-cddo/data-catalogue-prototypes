@@ -14,20 +14,21 @@ let global = {};
 const init =  async function() {
    global.organisations = await helpers.getData('./app/data/organisations.json');
    global.topics = await helpers.getData('./app/data/topics.json');
-   let resources = [];
+   global.resources = [];
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
    const mappedNhs = await helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
-   resources =  await resources.concat(mappedNhs, mappedCatalogue);
+   global.resources =  await global.resources.concat(mappedNhs, mappedCatalogue);
 
-   global.index = searchSetup(resources);
-//    console.log(JSON.stringify(resources, 0, 2));
-//    console.log(JSON.stringify(global.index.data.items, 0, 2));
+   global.index = searchSetup(global.resources);
+    //    console.log(JSON.stringify(resources, 0, 2));
+    //    console.log(JSON.stringify(global.index.data.items, 0, 2));
+}
 
 // SPRINT 1 ROUTES
 router.get('/s1/find', function(req, res) {  
-    let items = resources;  
+    let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
     let aggregations = global.index.data.aggregations;
@@ -73,8 +74,14 @@ router.get('/s1/find', function(req, res) {
     items = helpers.enrichTopics(items);
     // console.log(JSON.stringify(items, 0, 2));
     res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
-   })
-}
+})
+
+router.get('/s1/resources/:resourceID', function(req, res) {
+    const resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    const backLink = '/s1/find';
+    res.render("s1/resource", { resource: resource, backLink: backLink });
+})
+
 
 const searchSetup = function(data) {
     const configuration = {
@@ -143,6 +150,7 @@ const helpers = {
                     n.topic = helpers.splitTopics(e.topic);
                 }
             }
+            n.slug = n.title.toLowerCase().replaceAll(' ','-');
             return n;
         }
         )

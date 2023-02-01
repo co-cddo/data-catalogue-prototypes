@@ -1,0 +1,18 @@
+{% extends "layouts/main.html" %}
+{% block pageTitle %}
+  {{ resource.title }} - Sprint 1
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">
+    {{ resource.title }}
+</h1>
+<p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
+    {{ resource.description | govukMarkdown | safe  }}
+</p>
+{% endblock %}
+

@@ -64,7 +64,7 @@
             <ul class="govuk-list" data-module="edge">
                 {% for resource in resources %}
                 <li class="result-list__item">
-                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#" class="govuk-link">{{ resource.title}}</a></h2>
+                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="./resources/{{ resource.slug | urlencode }}" class="govuk-link">{{ resource.title}}</a></h2>
                     <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
                         <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
                     </p>
@@ -79,7 +79,7 @@
                         {% endfor %}
                     {% endif %}
                     <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
-                        {{ resource.description }}
+                        {{ resource.description | urlize | safe }}
                     </p>
                 </li>
                 {% endfor %}
