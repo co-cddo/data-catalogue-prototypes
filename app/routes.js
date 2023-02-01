@@ -24,9 +24,9 @@ const init =  async function() {
    global.index = searchSetup(resources);
 //    console.log(JSON.stringify(resources, 0, 2));
 //    console.log(JSON.stringify(global.index.data.items, 0, 2));
-   
-   // SPRINT 1 ROUTES
-   router.get('/s1/find', function(req, res) {  
+
+// SPRINT 1 ROUTES
+router.get('/s1/find', function(req, res) {  
     let items = resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -55,7 +55,7 @@ const init =  async function() {
         items = results.data.items;
         aggregations = results.data.aggregations;
     }
-
+    
     const filters = [
         {
             title: 'Topics',
@@ -164,6 +164,9 @@ const helpers = {
     },
     enrichTopics(items) {
         items.forEach(function(item, index) {
+            if(typeof item.topic == 'undefined') {
+                return;
+            }
             const topics = item.topic.map(function(e) {
                 if(typeof e == 'object') {
                     return e;
@@ -187,7 +190,6 @@ const helpers = {
             n.value = ogFilterItem[valueKey];
             n.text = ogFilterItem[textKey];
             n.name = groupId;
-            console.log(e);
             if(e.selected) {
                 n.checked = 'checked'
             }
