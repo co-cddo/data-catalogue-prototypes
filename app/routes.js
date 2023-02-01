@@ -79,7 +79,7 @@ router.get('/s1/find', function(req, res) {
 
 router.get('/s1/resources/:resourceID', function(req, res) {
     const resource = global.resources.find(r => r.slug ==  req.params.resourceID);
-    const backLink = (req.session.current_url === undefined) ? '/s1/find' : req.session.current_url;
+    let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s1/resource')) ? '/s1/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
     res.render("s1/resource", { resource: resource, backLink: backLink });
 })
