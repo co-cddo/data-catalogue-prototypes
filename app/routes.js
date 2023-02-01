@@ -18,16 +18,19 @@ const init =  async function() {
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
-   const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
-   resources = resources.concat(mappedNhs, mappedCatalogue);
+   const mappedNhs = await helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
+   resources =  await resources.concat(mappedNhs, mappedCatalogue);
 
-   const index = searchSetup(resources);
+   global.index = searchSetup(resources);
+//    console.log(JSON.stringify(resources, 0, 2));
+//    console.log(JSON.stringify(global.index.data.items, 0, 2));
    
    // SPRINT 1 ROUTES
    router.get('/s1/find', function(req, res) {  
     let items = resources;  
     let searchTerm;
     let appliedFilters = {};
+    let aggregations = global.index.data.aggregations;
     if (Object.keys(req.query).length !== 0) {
         if(req.query.q) {
             searchTerm = req.query.q;
@@ -50,22 +53,25 @@ const init =  async function() {
         }
         const results = search(searchTerm, appliedFilters);
         items = results.data.items;
+        aggregations = results.data.aggregations;
     }
 
     const filters = [
         {
             title: 'Topics',
             id: 'topicFilters',
-            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', req),
+            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
         },
         {
             title: 'Organisations',
             id: 'organisationFilters',
-            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', req),
+            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
         }
     ]
     
     const count = items.length;
+    items = helpers.enrichTopics(items);
+    // console.log(JSON.stringify(filters, 0, 2));
     res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
    })
 }
@@ -79,16 +85,16 @@ const searchSetup = function(data) {
             }
         },
         aggregations: {
+            topic: {
+                title: 'Topics',
+                size: 30,
+                conjunction: false
+            },
             issuing_body: {
                 title: 'Organisations',
                 size: 30,
                 conjunction: false
             },
-            topic: {
-                title: 'Topics',
-                size: 30,
-                conjunction: false
-            }
         },
         searchableFields: ['title', 'description' ,'issuing_body_readable'],
     };
@@ -126,35 +132,60 @@ const helpers = {
                 n.description = e.data.description;
                 n.issuing_body_readable = e.data.organisation;
                 n.issuing_body = issuing_body;
-                n.topic = helpers.generateTopics(topic);
+                n.topic = helpers.splitTopics(topic);
             }
             else {
                 n.title = e.name;
                 n.description = e.description;
                 n.issuing_body = e.provider;
                 n.issuing_body_readable = helpers.getOrgTitle(e.provider);
-                n.topic = helpers.generateTopics(e.topic);
+                if(e.topic) {
+                    n.topic = helpers.splitTopics(e.topic);
+                }
             }
             return n;
         }
         )
     },
-    generateTopics(string) {
+    splitTopics(string) {
         const topics = [].concat(string.split(','));
         return topics.map(function(e) {
-            const newTopics = global.topics.find(element => element.id == e);
-            return newTopics;
+            const newTopic = global.topics.find(element => element.id == e);
+            try {
+                newTopic.id;
+            } catch (e) {
+                console.error('Topic does not match one of the pre-defined topics:' + e);
+            }
+            if(newTopic) {
+                return newTopic.id;
+            }
+            return "";
         });
-
     },
-    generateFilterItems(items, valueKey, textKey, groupId, req) {
-        const query = req.query;
-        return items.map(function(e) {
+    enrichTopics(items) {
+        items.forEach(function(item, index) {
+            const topics = item.topic.map(function(e) {
+                const newTopic = global.topics.find(topic => topic.id == e);
+                return newTopic;
+            });
+            items[index].topic = topics;
+        });
+        return items;
+    },
+    generateFilterItems(items, valueKey, textKey, groupId, aggregation) {
+        return aggregation.buckets.map(function(e) {
+            const ogFilterItem = items.find(item => item[valueKey] == e.key);
+            try {
+                ogFilterItem[valueKey];
+            } catch (e) {
+                console.error('Filter does not match one of the pre-defined options:' + e);
+            }
             let n = {};
-            n.value = e[valueKey];
-            n.text = e[textKey];
+            n.value = ogFilterItem[valueKey];
+            n.text = ogFilterItem[textKey];
             n.name = groupId;
-            if(query && query[groupId] && query[groupId].includes(n.value)) {
+            console.log(e);
+            if(e.selected) {
                 n.checked = 'checked'
             }
             return n;
