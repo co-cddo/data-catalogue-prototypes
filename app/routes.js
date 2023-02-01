@@ -73,12 +73,14 @@ router.get('/s1/find', function(req, res) {
     const count = items.length;
     items = helpers.enrichTopics(items);
     // console.log(JSON.stringify(items, 0, 2));
+    req.session.current_url = req.originalUrl;
     res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
 })
 
 router.get('/s1/resources/:resourceID', function(req, res) {
     const resource = global.resources.find(r => r.slug ==  req.params.resourceID);
-    const backLink = '/s1/find';
+    const backLink = (req.session.current_url === undefined) ? '/s1/find' : req.session.current_url;
+    req.session.current_url = req.originalUrl;
     res.render("s1/resource", { resource: resource, backLink: backLink });
 })
 
