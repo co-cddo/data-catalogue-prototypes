@@ -71,7 +71,7 @@ const init =  async function() {
     
     const count = items.length;
     items = helpers.enrichTopics(items);
-    // console.log(JSON.stringify(filters, 0, 2));
+    // console.log(JSON.stringify(items, 0, 2));
     res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
    })
 }
@@ -165,6 +165,9 @@ const helpers = {
     enrichTopics(items) {
         items.forEach(function(item, index) {
             const topics = item.topic.map(function(e) {
+                if(typeof e == 'object') {
+                    return e;
+                }
                 const newTopic = global.topics.find(topic => topic.id == e);
                 return newTopic;
             });
