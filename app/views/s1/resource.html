@@ -12,20 +12,22 @@
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
     {{ resource.title }}
 </h1>
-<p class="govuk-!-margin-bottom-1">
+<p class="govuk-!-margin-bottom-3">
     {% if resource.topic|length %}
         {% for topic in resource.topic %}
             {% if topic|length %}
+            <a href="/s1/find?q=&topicFilters={{ topic.id }}&topicFilters=_unchecked&organisationFilters=_unchecked">
                 {{ govukTag({
                     text: topic.name,
                     classes: "govuk-tag--grey"
                 }) }}
+            </a>
             {% endif %}
         {% endfor %}
     {% endif %}
 </p>
 <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
-    {{ resource.description | govukMarkdown | safe  }}
+    {{ resource.description | replace("\\n\\n", "\n\n") | govukMarkdown | safe  }}
 </p>
 
 <!-- <h2>Raw data for debugging</h2>
