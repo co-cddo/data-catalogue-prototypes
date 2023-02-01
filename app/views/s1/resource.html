@@ -8,11 +8,29 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="govuk-heading-xl">
+<p class="govuk-caption-xl">{{ resource.issuing_body_readable }}</p>
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
     {{ resource.title }}
 </h1>
+<p class="govuk-!-margin-bottom-1">
+    {% if resource.topic|length %}
+        {% for topic in resource.topic %}
+            {% if topic|length %}
+                {{ govukTag({
+                    text: topic.name,
+                    classes: "govuk-tag--grey"
+                }) }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</p>
 <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
     {{ resource.description | govukMarkdown | safe  }}
 </p>
+
+<!-- <h2>Raw data for debugging</h2>
+<code>
+    {{ resource | dump}}
+</code> -->
 {% endblock %}
 
