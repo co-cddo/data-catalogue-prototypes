@@ -1,0 +1,72 @@
+[
+    {
+      "id": "business%20and%20economy",
+      "name": "Business and economy",
+      "description": "Small businesses, industry, imports, exports and trade"
+    },
+    {
+      "id": "crime%20and%20justice",
+      "name": "Crime and justice",
+      "description": "Courts, police, prison, offenders, borders and immigration"
+    },
+    {
+      "id": "defence",
+      "name": "Defence",
+      "description": "Armed forces, health and safety, search and rescue"
+    },
+    {
+      "id": "digital%20service%20performance",
+      "name": "Digital service performance",
+      "description": "Cost, usage, completion rate, digital take-up, satisfaction"
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "description": "Students, training, qualifications and the National Curriculum"
+    },
+    {
+      "id": "environment",
+      "name": "Environment",
+      "description": "Weather, flooding, rivers, air quality, geology and agriculture"
+    },
+    {
+      "id": "government",
+      "name": "Government",
+      "description": "Staff numbers and pay, local councillors and department business plans"
+    },
+    {
+      "id": "government%20reference%20data",
+      "name": "Government reference data",
+      "description": "Trusted data that is referenced and shared across government departments"
+    },
+    {
+      "id": "government%20spending",
+      "name": "Government spending",
+      "description": "Includes all payments by government departments over £25,000"
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "description": "Includes smoking, drugs, alcohol, medicine performance and hospitals"
+    },
+    {
+      "id": "mapping",
+      "name": "Mapping",
+      "description": "Addresses, boundaries, land ownership, aerial photographs, seabed and land terrain"
+    },
+    {
+      "id": "society",
+      "name": "Society",
+      "description": "Employment, benefits, household finances, poverty and population"
+    },
+    {
+      "id": "towns%20and%20cities",
+      "name": "Towns and cities",
+      "description": "Includes housing, urban planning, leisure, waste and energy, consumption"
+    },
+    {
+      "id": "transport",
+      "name": "Transport",
+      "description": "Airports, roads, freight, electric vehicles, parking, buses and footpaths"
+    }
+  ]
