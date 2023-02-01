@@ -1,6 +1,5 @@
 {% extends "layouts/main.html" %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% block pageTitle %}
   Find Data Services - Sprint 1
@@ -59,16 +58,6 @@
                     <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
                         <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
                     </p>
-                    {% if resource.topic|length %}
-                        {% for topic in resource.topic %}
-                        {% if topic|length %}
-                                {{ govukTag({
-                                    text: topic.name,
-                                    classes: "govuk-tag--grey"
-                                }) }}
-                                {% endif %}
-                        {% endfor %}
-                    {% endif %}
                     <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
                         {{ resource.description }}
                     </p>
