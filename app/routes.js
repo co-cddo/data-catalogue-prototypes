@@ -13,24 +13,20 @@ let global = {};
 
 const init =  async function() {
    global.organisations = await helpers.getData('./app/data/organisations.json');
-   global.topics = await helpers.getData('./app/data/topics.json');
-   let resources = [];
+   let resources = await helpers.getData('./app/data/resources.json');
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
-   const mappedNhs = await helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
-   resources =  await resources.concat(mappedNhs, mappedCatalogue);
+   const mappedNhs = helpers.mapLiveSchemaToSpec(nhs.apis, 'National Health Service');
+   resources = resources.concat(mappedNhs, mappedCatalogue);
 
-   global.index = searchSetup(resources);
-//    console.log(JSON.stringify(resources, 0, 2));
-//    console.log(JSON.stringify(global.index.data.items, 0, 2));
-
-// SPRINT 1 ROUTES
-router.get('/s1/find', function(req, res) {  
+   const index = searchSetup(resources);
+   
+   // SPRINT 1 ROUTES
+   router.get('/s1/find', function(req, res) {  
     let items = resources;  
     let searchTerm;
     let appliedFilters = {};
-    let aggregations = global.index.data.aggregations;
     if (Object.keys(req.query).length !== 0) {
         if(req.query.q) {
             searchTerm = req.query.q;
@@ -43,35 +39,19 @@ router.get('/s1/find', function(req, res) {
                 return true;
             })
         }
-        if(Array.isArray(req.query.topicFilters)) {
-            appliedFilters.topic = req.query.topicFilters.filter(function(e) {
-                if(e == '_unchecked') {
-                    return false;
-                }
-                return true;
-            })
-        }
         const results = search(searchTerm, appliedFilters);
         items = results.data.items;
-        aggregations = results.data.aggregations;
     }
     
     const filters = [
         {
-            title: 'Topics',
-            id: 'topicFilters',
-            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
-        },
-        {
             title: 'Organisations',
             id: 'organisationFilters',
-            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
+            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', req),
         }
     ]
     
     const count = items.length;
-    items = helpers.enrichTopics(items);
-    // console.log(JSON.stringify(items, 0, 2));
     res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
    })
 }
@@ -85,16 +65,11 @@ const searchSetup = function(data) {
             }
         },
         aggregations: {
-            topic: {
-                title: 'Topics',
-                size: 30,
-                conjunction: false
-            },
             issuing_body: {
                 title: 'Organisations',
                 size: 30,
                 conjunction: false
-            },
+            }
         },
         searchableFields: ['title', 'description' ,'issuing_body_readable'],
     };
@@ -124,26 +99,21 @@ const helpers = {
             console.log("e", error);
         }
     },
-    mapLiveSchemaToSpec(data, issuing_body, topic) {
+    mapLiveSchemaToSpec(data) {
         return data.map(function(e) {
-            let n = {};
             if(e.data) {
-                n.title = e.data.name;
-                n.description = e.data.description;
-                n.issuing_body_readable = e.data.organisation;
-                n.issuing_body = issuing_body;
-                n.topic = helpers.splitTopics(topic);
+                e.title = e.data.name;
+                e.description = e.data.description;
+                e.issuing_body_readable = e.data.organisation;
+                e.issuing_body = 'nhs-digital';
             }
             else {
-                n.title = e.name;
-                n.description = e.description;
-                n.issuing_body = e.provider;
-                n.issuing_body_readable = helpers.getOrgTitle(e.provider);
-                if(e.topic) {
-                    n.topic = helpers.splitTopics(e.topic);
-                }
+                e.title = e.name;
+                e.description = e.description;
+                e.issuing_body = e.provider;
+                e.issuing_body_readable = helpers.getOrgTitle(e.provider);
             }
-            return n;
+            return e;
         }
         )
     },
@@ -187,8 +157,8 @@ const helpers = {
                 console.error('Filter does not match one of the pre-defined options:' + e);
             }
             let n = {};
-            n.value = ogFilterItem[valueKey];
-            n.text = ogFilterItem[textKey];
+            n.value = e[valueKey];
+            n.text = e[textKey];
             n.name = groupId;
             if(e.selected) {
                 n.checked = 'checked'
