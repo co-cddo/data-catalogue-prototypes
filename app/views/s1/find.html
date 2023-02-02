@@ -38,10 +38,14 @@
                 <h1 class="govuk-heading-m">
                     Filter by topic and organisation
                 </h1>
-                <button class="govuk-button app-no-js-only" data-module="govuk-button">
-                    Apply filters
-                    </button>
-                <a href="/s1/find">Clear filters</a>
+                <div class="filter-header govuk-!-margin-bottom-4">
+                    <button class="govuk-button govuk-button--secondary app-no-js-only govuk-!-margin-0" data-module="govuk-button">Apply filters</button>
+                    {% if anyFiltersActive %}
+                    <p class="govuk-!-margin-0">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/s1/find">Clear filters</a>
+                    </p>
+                    {% endif %}
+                </div>
                 {% for filter in filters %}
                     <div class="govuk-form-group">
                         {{ govukCheckboxes({

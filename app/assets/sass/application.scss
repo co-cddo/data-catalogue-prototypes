@@ -9,6 +9,11 @@
     margin: 0 0 15px!important;
     border-bottom: 1px solid #b1b4b6;
 }
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .gem-c-search {
     position: relative;
     margin-bottom: 30px;
