@@ -33,32 +33,39 @@
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third">
-            <h1 class="govuk-heading-m">
-                Filter by topic and organisation
-            </h1>
-            <button class="govuk-button app-no-js-only" data-module="govuk-button">
-                Apply filters
-                </button>
-            {% for filter in filters %}
-                <div class="govuk-form-group">
-                    {{ govukCheckboxes({
-                        name: filter.title,
-                        classes: "govuk-checkboxes--small js-auto-submit",
-                        attributes: {
-                            "id": filter.id
-                            },
-                        fieldset: {
-                            legend: {
-                            text: filter.title,
-                            classes: "govuk-fieldset__legend--s"
-                            }
-                        },
-                        items: filter.items
-                        }) }}
+        {% if filters|length %}
+            <div class="govuk-grid-column-one-third">
+                <h1 class="govuk-heading-m">
+                    Filter by topic and organisation
+                </h1>
+                <div class="filter-header govuk-!-margin-bottom-4">
+                    <button class="govuk-button govuk-button--secondary app-no-js-only govuk-!-margin-0" data-module="govuk-button">Apply filters</button>
+                    {% if anyFiltersActive %}
+                    <p class="govuk-!-margin-0">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/s1/find">Clear filters</a>
+                    </p>
+                    {% endif %}
                 </div>
-            {% endfor %}
-        </div>
+                {% for filter in filters %}
+                    <div class="govuk-form-group">
+                        {{ govukCheckboxes({
+                            name: filter.title,
+                            classes: "govuk-checkboxes--small js-auto-submit",
+                            attributes: {
+                                "id": filter.id
+                                },
+                            fieldset: {
+                                legend: {
+                                text: filter.title,
+                                classes: "govuk-fieldset__legend--s"
+                                }
+                            },
+                            items: filter.items
+                            }) }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-heading-l">{{ count }} results</p>
             {% if resources|length %}
@@ -70,14 +77,8 @@
                             <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
                         </p>
                         {% if resource.topic|length %}
-                            {% for topic in resource.topic %}
-                            {% if topic|length %}
-                                    {{ govukTag({
-                                        text: topic.name,
-                                        classes: "govuk-tag--grey"
-                                    }) }}
-                                    {% endif %}
-                            {% endfor %}
+                            <h3 class="govuk-visually-hidden">Topics:</h3>
+                            {% include "_includes/topics.njk" %}
                         {% endif %}
                         <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
                             {{ resource.description | urlize | safe }}

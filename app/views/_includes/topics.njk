@@ -1,0 +1,23 @@
+{% if resource.topic|length > 1 %}
+<ul class="govuk-!-display-inline govuk-list">
+        {% for topic in resource.topic %}
+        <li class="govuk-!-display-inline">
+        {% if topic|length %}
+            {{ govukTag({
+                text: topic.name,
+                classes: "govuk-tag--grey"
+            }) }}
+        {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% elseif resource.topic|length %}
+    {% for topic in resource.topic %}
+        <p class="govuk-!-display-inline">
+            {{ govukTag({
+                text: topic.name,
+                classes: "govuk-tag--grey"
+            }) }}
+        </p>
+    {% endfor %}
+{% endif %}

@@ -32,11 +32,13 @@ router.get('/s1/find', function(req, res) {
     let searchTerm;
     let appliedFilters = {};
     let aggregations = global.index.data.aggregations;
+    let anyFiltersActive = false;
     if (Object.keys(req.query).length !== 0) {
         if(req.query.q) {
             searchTerm = req.query.q;
         }
         if(Array.isArray(req.query.organisationFilters)) {
+            anyFiltersActive = true;
             appliedFilters.issuing_body = req.query.organisationFilters.filter(function(e) {
                 if(e == '_unchecked') {
                     return false;
@@ -46,6 +48,7 @@ router.get('/s1/find', function(req, res) {
         }
         if(Array.isArray(req.query.topicFilters)) {
             appliedFilters.topic = req.query.topicFilters.filter(function(e) {
+                anyFiltersActive = true;
                 if(e == '_unchecked') {
                     return false;
                 }
@@ -74,7 +77,7 @@ router.get('/s1/find', function(req, res) {
     items = helpers.enrichTopics(items);
     // console.log(JSON.stringify(items, 0, 2));
     req.session.current_url = req.originalUrl;
-    res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters });
+    res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
 })
 
 router.get('/s1/resources/:resourceID', function(req, res) {
