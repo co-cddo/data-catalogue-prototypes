@@ -61,29 +61,42 @@
         </div>
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-heading-l">{{ count }} results</p>
-            <ul class="govuk-list" data-module="edge">
-                {% for resource in resources %}
-                <li class="result-list__item">
-                    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="./resources/{{ resource.slug | urlencode }}" class="govuk-link">{{ resource.title}}</a></h2>
-                    <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
-                        <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
-                    </p>
-                    {% if resource.topic|length %}
-                        {% for topic in resource.topic %}
-                        {% if topic|length %}
-                                {{ govukTag({
-                                    text: topic.name,
-                                    classes: "govuk-tag--grey"
-                                }) }}
-                                {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
-                        {{ resource.description | urlize | safe }}
-                    </p>
-                </li>
-                {% endfor %}
-            </ul>
+            {% if resources|length %}
+                <ul class="govuk-list" data-module="edge">
+                    {% for resource in resources %}
+                    <li class="result-list__item">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="./resources/{{ resource.slug | urlencode }}" class="govuk-link">{{ resource.title}}</a></h2>
+                        <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-0">
+                            <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
+                        </p>
+                        {% if resource.topic|length %}
+                            {% for topic in resource.topic %}
+                            {% if topic|length %}
+                                    {{ govukTag({
+                                        text: topic.name,
+                                        classes: "govuk-tag--grey"
+                                    }) }}
+                                    {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0">
+                            {{ resource.description | urlize | safe }}
+                        </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+            <div class="no-results govuk-!-font-size-19"> 
+                <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
+                 <p class="govuk-body">Improve your search results by:</p> 
+                 <ul class="govuk-list govuk-list--bullet"> 
+                    <li>removing filters</li> 
+                    <li>double-checking your spelling</li> 
+                    <li>using fewer keywords</li> 
+                    <li>searching for something less specific</li> 
+                </ul>
+            </div>
+            {% endif %}
         </div>
     </div>
 </form>
