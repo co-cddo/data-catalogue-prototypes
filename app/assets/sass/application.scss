@@ -14,6 +14,25 @@
     justify-content: space-between;
     align-items: center;
 }
+.datacat-color-white {
+    color: white !important;
+}
+.data-cat-masthead__aside {
+    color: white;
+    border: 1px solid white;
+    padding: 20px;
+    *, a {
+        color: white;
+    }
+}
+.datacat-row-of-threes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.datacat-row-of-threes > * {
+    width: 32%;
+}
 .gem-c-search {
     position: relative;
     margin-bottom: 30px;

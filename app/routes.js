@@ -27,6 +27,9 @@ const init =  async function() {
 }
 
 // SPRINT 1 ROUTES
+router.get('/s1/start', function(req,res) {
+    res.render("s1/start", { topics: global.topics, organisations: global.organisations });
+})
 router.get('/s1/find', function(req, res) {  
     let items = global.resources;  
     let searchTerm;

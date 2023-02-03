@@ -19,12 +19,11 @@
     </p>
   </div>
   
+  <h1 class="x-govuk-masthead__title">
+    Find government data
+  </h1>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds-from-desktop">
-        
-          <h1 class="x-govuk-masthead__title">
-            Find government data
-          </h1>
           <p class="x-govuk-masthead__description govuk-!-margin-bottom-3">
             Search for government API’s, data services and data sets that are available to share between departments.
             <p class="x-govuk-masthead__description govuk-!-margin-bottom-3">You can find out whether the data you need is available and how to request access to it.</p>
@@ -48,17 +47,38 @@
         </div>
         
         <div class="govuk-grid-column-one-third-from-desktop">
-          <div class="x-govuk-masthead__image">
-            <img src="/images/homepage-illustration.svg" alt="" role="presentation">
-          </div>
+            <div class="data-cat-masthead__aside">
+                <h2 class="govuk-heading-m datacat-color-white">Recently added</h2>
+                <ul class="govuk-list datacat-color-white">
+                    <li><a href="#">Goods Vehicle Movements</a></li>
+                    <li><a href="#">OS Maps API</a></li>
+                    <li><a href="#">Display vacancy advert API</a></li>
+                </ul>
+            </div>
         </div>
-        
       </div>
     </div>
   </div>
 {% endblock %}
 
 {% block content %}
+  <h2 class="govuk-heading-l">Browse by topic</h2>
+  <ul class="govuk-list datacat-row-of-threes">
+        {% for topic in topics %}
+            <li>
+                <h3 class="govuk-heading-s"><a class="govuk-link" href="/s1/find?topicFilters={{ topic.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ topic.name }}</a></h3>
+                <p class="govuk-body">{{topic.description}}</p>
+            </li>
+        {% endfor %}
+    </ul>
+  <h2 class="govuk-heading-l">Browse by organisation</h2>
+  <ul class="govuk-list datacat-row-of-threes">
+        {% for org in organisations %}
+            <li>
+                <a class="govuk-link" href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ org.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
 {% block scripts %}
