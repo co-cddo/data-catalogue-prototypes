@@ -69,10 +69,8 @@ router.get('/s1/find', function(req, res) {
                 return true;
             })
         }
-        console.log('Time to search');
-        console.log(appliedFilters);
         const results = search(searchTerm, appliedFilters);
-        console.log(JSON.stringify(results, 0, 2));
+        // console.log(JSON.stringify(results, 0, 2));
         items = results.data.items;
         aggregations = results.data.aggregations;
     }
