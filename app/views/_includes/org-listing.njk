@@ -1,21 +1,26 @@
 <h2 class="govuk-heading-m">{{ orgListingTitle }}</h2>
-<ul class="govuk-list datacat-row-of-threes">
+{% if orgLogos %}
+    <ul class="gem-c-cards__list ">
+{% else %}
+    <ul class="govuk-list datacat-row-of-threes">
+{% endif %}
     {% for org in orgListing | sort(false,false, 'id') %}
-    {# {{ org | dump }} #}
-    {% if orgLogos and org.details and org.details.organisation_logo_type_class_name != "custom" and org.details.organisation_logo_type_class_name != "no-identity" %}
-        {% set details = org.details %}
-        <li class="govuk-!-margin-bottom-5">
-            <h4 class="gem-c-organisation-logo brand--{{ details.organisation_brand_colour_class_name}}">
-                <a class="gem-c-organisation-logo__container gem-c-organisation-logo__link gem-c-organisation-logo__crest gem-c-organisation-logo__crest--{{details.organisation_logo_type_class_name}} brand__border-color"
-                href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">
-                    <span class="gem-c-organisation-logo__name">{{details.logo_formatted_name}}</span>
-                </a>
-            </h4>
-        </li>
-    {% else %}
-        <li class="govuk-!-margin-bottom-3">
-            <a class="govuk-link" href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ org.name }}</a>
-        </li>
-    {% endif %}
+        {# {{ org | dump }} #}
+        {% if orgLogos and org.details and org.details.organisation_logo_type_class_name != "custom" and org.details.organisation_logo_type_class_name != "no-identity" %}
+            {% set details = org.details %}
+            <li class="govuk-!-margin-bottom-5 govuk-!-margin-left-2 govuk-!-margin-right-2">
+                <h4 class="gem-c-organisation-logo brand--{{ details.organisation_brand_colour_class_name}}">
+                    <a class="gem-c-organisation-logo__container gem-c-organisation-logo__link gem-c-organisation-logo__crest gem-c-organisation-logo__crest--{{details.organisation_logo_type_class_name}} brand__border-color"
+                    href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">
+                        <span class="gem-c-organisation-logo__name">{{details.logo_formatted_name}}</span>
+                    </a>
+                </h4>
+            </li>
+        {% else %}
+            <li class="organisations-list__item">
+                <a class="govuk-link" href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ org.name }}</a>
+            </li>
+        {% endif %}
     {% endfor %}
 </ul>
+

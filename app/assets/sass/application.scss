@@ -6,6 +6,7 @@
 @import "functions/image-url";
 @import "govuk_publishing_components/components/helpers/brand-colours";
 @import "govuk_publishing_components/components/organisation-logo";
+@import "govuk_publishing_components/components/cards";
 
 // Add extra styles here
 .result-list__item {
@@ -30,12 +31,9 @@
     }
 }
 .datacat-row-of-threes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.datacat-row-of-threes > * {
-    width: 32%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
 }
 .datacat-row-of-two {
     display: flex;
@@ -154,4 +152,10 @@
 
 .gem-c-search--no-border .gem-c-search__input[type="search"] {
     border: 0
+}
+.organisations-list__item {
+    list-style-type: none;
+    margin-bottom: 15px!important;
+    border-bottom: 1px solid #b1b4b6;
+    padding-bottom: 15px;
 }
