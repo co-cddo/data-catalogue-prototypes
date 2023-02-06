@@ -3,11 +3,6 @@
 // https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
 // 
 
-@import "functions/image-url";
-@import "govuk_publishing_components/components/helpers/brand-colours";
-@import "govuk_publishing_components/components/organisation-logo";
-@import "govuk_publishing_components/components/cards";
-
 // Add extra styles here
 .result-list__item {
     padding: 0 0 15px;
@@ -18,30 +13,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.datacat-color-white {
-    color: white !important;
-}
-.data-cat-masthead__aside {
-    color: white;
-    border: 1px solid white;
-    padding: 20px;
-    *, a {
-        color: white;
-    }
-}
-.datacat-row-of-threes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 20px;
-}
-.datacat-row-of-two {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.datacat-row-of-two > * {
-    width: 48%;
 }
 .gem-c-search {
     position: relative;
@@ -106,28 +77,22 @@
     top: 10px;
     left: 10px
 }
-
-.gem-c-search--on-govuk-blue {
-    .gem-c-search__input {
-        border-width: 0
-    }
-    
-    .gem-c-search__input:focus {
-        box-shadow: none
-    }
-    
-    .gem-c-search__submit {
-        background-color: #0b0c0c;
-        color: #fff
-    }
-     .gem-c-search__submit:hover {
-        background-color: #171919
-    }
-    .gem-c-search__item-wrapper {
-        background: transparent;
-    }
+.gem-c-search--on-govuk-blue .gem-c-search__input {
+    border-width: 0
 }
 
+.gem-c-search--on-govuk-blue .gem-c-search__input:focus {
+    box-shadow: none
+}
+
+.gem-c-search--on-govuk-blue .gem-c-search__submit {
+    background-color: #0b0c0c;
+    color: #fff
+}
+
+.gem-c-search--on-govuk-blue .gem-c-search__submit:hover {
+    background-color: #171919
+}
 
 .js-enabled .gem-c-search--on-govuk-blue .gem-c-search__label {
     color: #505a5f
@@ -152,10 +117,4 @@
 
 .gem-c-search--no-border .gem-c-search__input[type="search"] {
     border: 0
-}
-.organisations-list__item {
-    list-style-type: none;
-    margin-bottom: 15px!important;
-    border-bottom: 1px solid #b1b4b6;
-    padding-bottom: 15px;
 }
