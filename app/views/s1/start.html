@@ -73,7 +73,7 @@
     </ul>
   <h2 class="govuk-heading-l">Browse by organisation</h2>
   <ul class="govuk-list datacat-row-of-threes">
-        {% for org in organisations %}
+        {% for org in organisations | sort(false,false, 'id') %}
             <li>
                 <a class="govuk-link" href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ org.name }}</a>
             </li>
