@@ -148,12 +148,14 @@ const helpers = {
                 n.issuing_body_readable = e.data.organisation;
                 n.issuing_body = issuing_body;
                 n.topic = helpers.splitTopics(topic);
+                n.contact = e.data.contact;
             }
             else {
                 n.title = e.name;
                 n.description = e.description;
                 n.issuing_body = e.provider;
                 n.issuing_body_readable = helpers.getOrgTitle(e.provider);
+                n.contact = e.maintainer;
                 if(e.topic) {
                     n.topic = helpers.splitTopics(e.topic);
                 }
