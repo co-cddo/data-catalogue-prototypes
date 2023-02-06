@@ -1,0 +1,7 @@
+@use "sass:string";
+
+@function image-url($url) {
+    $base_url: "/public/images/";
+    $new_url: "url(" + $base_url + $url + ")";
+    @return unquote($new_url);
+}

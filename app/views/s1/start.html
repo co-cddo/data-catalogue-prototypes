@@ -72,10 +72,12 @@
         {% endfor %}
     </ul>
     <h2 class="govuk-heading-l">Browse by organisation</h2>
+    {% set orgLogos = true %}
     {% set orgListingTitle = "Ministerial departments" %}
     {% set orgListing = mds %}
     {% include "_includes/org-listing.njk" %}
     
+    {% set orgLogos = false %}
     {% set orgListingTitle = "Non-ministerial departments" %}
     {% set orgListing = nmds %}
     {% include "_includes/org-listing.njk" %}
@@ -99,14 +101,6 @@
     {% set orgListingTitle = "Others" %}
     {% set orgListing = others %}
     {% include "_includes/org-listing.njk" %}
-  <h2 class="govuk-heading-l">Browse by organisation</h2>
-  <ul class="govuk-list datacat-row-of-threes">
-        {% for org in organisations | sort(false,false, 'id') %}
-            <li class="govuk-!-margin-bottom-3">
-                <a class="govuk-link" href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ org.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
 {% endblock %}
 
 {% block scripts %}

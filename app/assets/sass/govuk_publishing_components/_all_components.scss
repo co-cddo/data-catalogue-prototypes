@@ -1,0 +1,86 @@
+// This is the file that the application needs to include in order to use
+// the components.
+
+// feature flag for accessible link styles
+$govuk-new-link-styles: true;
+
+@import "govuk_publishing_components/govuk_frontend_support";
+@import "govuk_publishing_components/component_support";
+
+// Include all govuk frontend components
+@import "govuk/components/all";
+
+// components
+@import "components/accordion";
+@import "components/action-link";
+@import "components/attachment";
+@import "components/attachment-link";
+@import "components/back-link";
+@import "components/big-number";
+@import "components/breadcrumbs";
+@import "components/button";
+@import "components/cards";
+@import "components/character-count";
+@import "components/checkboxes";
+@import "components/contents-list";
+@import "components/contextual-guidance";
+@import "components/contextual-sidebar";
+@import "components/cookie-banner";
+@import "components/copy-to-clipboard";
+@import "components/date-input";
+@import "components/details";
+@import "components/devolved-nations";
+@import "components/document-list";
+@import "components/emergency-banner";
+@import "components/error-alert";
+@import "components/error-message";
+@import "components/error-summary";
+@import "components/feedback";
+@import "components/fieldset";
+@import "components/file-upload";
+@import "components/govspeak-html-publication";
+@import "components/govspeak";
+@import "components/heading";
+@import "components/hint";
+@import "components/image-card";
+@import "components/input";
+@import "components/inset-text";
+@import "components/intervention";
+@import "components/inverse-header";
+@import "components/label";
+@import "components/layout-footer";
+@import "components/layout-for-admin";
+@import "components/layout-for-public";
+@import "components/layout-header";
+@import "components/layout-super-navigation-header";
+@import "components/lead-paragraph";
+@import "components/metadata";
+@import "components/modal-dialogue";
+@import "components/notice";
+@import "components/organisation-logo";
+@import "components/panel";
+@import "components/phase-banner";
+@import "components/previous-and-next-navigation";
+@import "components/print-link";
+@import "components/radio";
+@import "components/related-navigation";
+@import "components/reorderable-list";
+@import "components/search";
+@import "components/select";
+@import "components/share-links";
+@import "components/show-password";
+@import "components/signup-link";
+@import "components/single-page-notification-button";
+@import "components/skip-link";
+@import "components/step-by-step-nav-header";
+@import "components/step-by-step-nav-related";
+@import "components/step-by-step-nav";
+@import "components/subscription-links";
+@import "components/success-alert";
+@import "components/summary-list";
+@import "components/tabs";
+@import "components/table";
+@import "components/textarea";
+@import "components/title";
+@import "components/translation-nav";
+@import "components/warning-text";
