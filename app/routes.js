@@ -36,7 +36,6 @@ router.get('/s1/start', async function(req,res) {
         newTopic.count = e.doc_count;
         return newTopic;
     });
-    console.log(topics);
     const orgs = await helpers.enrichOrgs(global.organisations);
     const endpbs = orgs.filter( org => org.format == 'Executive non-departmental public body');
     const mds = orgs.filter( org => org.format == 'Ministerial department');
