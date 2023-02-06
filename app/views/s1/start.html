@@ -1,7 +1,7 @@
 {% extends "govuk-prototype-kit/layouts/govuk-branded.html" %}
 
 {% block pageTitle %}
-  Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+  {{ serviceName }}
 {% endblock %}
 
 {% block header %}
@@ -63,11 +63,13 @@
 
 {% block content %}
   <h2 class="govuk-heading-l">Browse by topic</h2>
-  <ul class="govuk-list datacat-row-of-threes">
+  <ul class="gem-c-cards__list govuk-!-margin-bottom-6">
         {% for topic in topics %}
-            <li>
-                <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><a class="govuk-link" href="/s1/find?topicFilters={{ topic.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ topic.name }}</a></h3>
-                <p class="govuk-body">{{topic.description}}</p>
+            <li class="gem-c-cards__list-item">
+                <div class="gem-c-cards__list-item-wrapper">
+                    <h3 class="govuk-heading-s gem-c-cards__sub-heading"><a class="govuk-link gem-c-cards__link" href="/s1/find?topicFilters={{ topic.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ topic.name }}</a></h3>
+                    <p class="govuk-body gem-c-cards__description">{{topic.description}}</p>
+                </div>
             </li>
         {% endfor %}
     </ul>
