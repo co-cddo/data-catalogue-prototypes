@@ -3,6 +3,10 @@
 // https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
 // 
 
+@import "functions/image-url";
+@import "govuk_publishing_components/components/helpers/brand-colours";
+@import "govuk_publishing_components/components/organisation-logo";
+
 // Add extra styles here
 .result-list__item {
     padding: 0 0 15px;
@@ -32,6 +36,14 @@
 }
 .datacat-row-of-threes > * {
     width: 32%;
+}
+.datacat-row-of-two {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.datacat-row-of-two > * {
+    width: 48%;
 }
 .gem-c-search {
     position: relative;

@@ -1,0 +1,24 @@
+@import "govuk/components/notification-banner/notification-banner";
+
+.gem-c-notice {
+  @include govuk-responsive-margin(8, "bottom");
+  clear: both;
+
+  .govuk-govspeak {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .govuk-body:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.gem-c-notice__title {
+  a {
+    @include govuk-link-common;
+    @include govuk-link-style-default;
+    @include govuk-link-print-friendly;
+  }
+}
