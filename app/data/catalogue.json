@@ -11,7 +11,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "",
+      "topic": "government",
       "dateAdded": "2020-01-08"
     },
     {
@@ -41,7 +41,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-01-08"
     },
     {
@@ -56,7 +56,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "",
+      "topic": "digital%20service%20performance,government",
       "dateAdded": "2020-01-08"
     },
     {
@@ -71,7 +71,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "",
+      "topic": "digital%20service%20performance,government",
       "dateAdded": "2020-01-08"
     },
     {
@@ -116,7 +116,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "government",
+      "topic": "government,government%20spending",
       "dateAdded": "2020-01-08"
     },
     {
@@ -131,7 +131,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "government",
+      "topic": "government,government%20spending",
       "dateAdded": "2020-01-08"
     },
     {
@@ -146,7 +146,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "",
+      "topic": "business%20and%20economy,government%20reference%20data",
       "dateAdded": "2020-01-08"
     },
     {
@@ -161,7 +161,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "government-digital-service",
-      "topic": "mapping",
+      "topic": "mapping,towns%20and%20cities",
       "dateAdded": "2020-01-08"
     },
     {
@@ -221,7 +221,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "driver-and-vehicle-licensing-agency",
-      "topic": "",
+      "topic": "transport",
       "dateAdded": "2020-01-08"
     },
     {
@@ -236,7 +236,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "driver-and-vehicle-licensing-agency",
-      "topic": "",
+      "topic": "transport",
       "dateAdded": "2020-01-08"
     },
     {
@@ -356,7 +356,7 @@
       "startDate": "2020-07-01",
       "endDate": "",
       "provider": "ordnance-survey",
-      "topic": "",
+      "topic": "government%20reference%20data",
       "dateAdded": "2020-08-24"
     },
     {
@@ -371,7 +371,7 @@
       "startDate": "2020-07-01",
       "endDate": "",
       "provider": "ordnance-survey",
-      "topic": "",
+      "topic": "government%20reference%20data",
       "dateAdded": "2020-08-24"
     },
     {
@@ -386,7 +386,7 @@
       "startDate": "2020-07-01",
       "endDate": "",
       "provider": "ordnance-survey",
-      "topic": "",
+      "topic": "mapping,government%20reference%20data",
       "dateAdded": "2020-08-24"
     },
     {
@@ -401,7 +401,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "environment-agency",
-      "topic": "environment",
+      "topic": "environment,defence",
       "dateAdded": "2020-01-08"
     },
     {
@@ -431,7 +431,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "environment-agency",
-      "topic": "environment",
+      "topic": "environment,defence",
       "dateAdded": "2020-01-08"
     },
     {
@@ -461,7 +461,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "environment-agency",
-      "topic": "",
+      "topic": "health,environment",
       "dateAdded": "2020-01-08"
     },
     {
@@ -536,7 +536,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "environment-agency",
-      "topic": "",
+      "topic": "environment,government%20reference%20data",
       "dateAdded": "2022-07-21"
     },
     {
@@ -610,8 +610,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "government",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -625,8 +625,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "government",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -640,8 +640,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "government",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -655,8 +655,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -670,8 +670,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -685,8 +685,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -700,8 +700,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -715,8 +715,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -730,8 +730,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -745,8 +745,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -760,8 +760,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "health",
+      "provider": "department-for-work-pensions",
+      "topic": "health,society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -775,8 +775,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -790,8 +790,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2020-08-28"
     },
     {
@@ -805,8 +805,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -820,8 +820,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "health",
+      "provider": "department-for-work-pensions",
+      "topic": "health,society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -835,8 +835,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -850,8 +850,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -865,8 +865,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -880,8 +880,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -895,8 +895,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -910,8 +910,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "government",
       "dateAdded": "2022-08-23"
     },
     {
@@ -925,8 +925,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "government,society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -940,8 +940,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -955,8 +955,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society,mapping",
       "dateAdded": "2022-08-23"
     },
     {
@@ -970,8 +970,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society,health",
       "dateAdded": "2022-08-23"
     },
     {
@@ -985,8 +985,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society,health",
       "dateAdded": "2022-08-23"
     },
     {
@@ -1000,8 +1000,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -1015,8 +1015,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -1030,8 +1030,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -1045,8 +1045,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "digital%20service%20performance,society",
       "dateAdded": "2022-08-23"
     },
     {
@@ -1060,8 +1060,8 @@
       "areaServed": "Digital",
       "startDate": "",
       "endDate": "",
-      "provider": "department-for-work-and-pensions",
-      "topic": "",
+      "provider": "department-for-work-pensions",
+      "topic": "society,government%20reference%20data",
       "dateAdded": "2022-08-23"
     },
     {
@@ -1076,7 +1076,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "london-borough-of-hackney",
-      "topic": "",
+      "topic": "mapping,government%20reference%20data",
       "dateAdded": "2020-01-08"
     },
     {
@@ -1091,7 +1091,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "local-government-association",
-      "topic": "",
+      "topic": "government%20reference%20data,business%20and%20economy,towns%20and%20cities",
       "dateAdded": "2020-01-08"
     },
     {
@@ -1106,7 +1106,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "west-berkshire-council",
-      "topic": "",
+      "topic": "government,transport,towns%20and%20cities",
       "dateAdded": "2020-01-08"
     },
     {
@@ -1121,7 +1121,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-14"
     },
     {
@@ -1136,7 +1136,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "department-for-international-trade",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-03-09"
     },
     {
@@ -1151,7 +1151,7 @@
       "startDate": "in service",
       "endDate": "",
       "provider": "uk-hydrographic-office",
-      "topic": "mapping",
+      "topic": "transport,mapping",
       "dateAdded": "2020-09-18"
     },
     {
@@ -1181,7 +1181,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1196,7 +1196,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1421,7 +1421,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1436,7 +1436,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1451,7 +1451,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1466,7 +1466,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1481,7 +1481,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1496,7 +1496,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "",
+      "topic": "business%20and%20economy,society",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1541,7 +1541,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "business%20and%20economy",
+      "topic": "business%20and%20economy,society",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1616,7 +1616,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "hm-revenue-customs",
-      "topic": "government",
+      "topic": "government,digital%20service%20performance",
       "dateAdded": "2020-09-02"
     },
     {
@@ -1721,7 +1721,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "ministry-of-justice",
-      "topic": "crime%20and%20justice",
+      "topic": "crime%20and%20justice,society",
       "dateAdded": "2020-10-12"
     },
     {
@@ -1766,7 +1766,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "uk-police",
-      "topic": "crime%20and%20justice",
+      "topic": "crime%20and%20justice,defence",
       "dateAdded": "2020-10-12"
     },
     {
@@ -1781,7 +1781,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "transport-for-london",
-      "topic": "transport",
+      "topic": "transport,towns%20and%20cities",
       "dateAdded": "2020-10-12"
     },
     {
@@ -1810,8 +1810,8 @@
       "areaServed": "England and Wales",
       "startDate": "2018-02-26",
       "endDate": "optional",
-      "provider": "department-for-levelling-up--and-communities",
-      "topic": "towns%20and%20cities",
+      "provider": "",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1826,7 +1826,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1841,7 +1841,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1856,7 +1856,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1871,7 +1871,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1886,7 +1886,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1901,7 +1901,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1916,7 +1916,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1931,7 +1931,7 @@
       "startDate": "2018-02-26",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "towns%20and%20cities",
+      "topic": "towns%20and%20cities,mapping",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1946,7 +1946,7 @@
       "startDate": "2013-12-01",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "",
+      "topic": "government%20reference%20data,digital%20service%20performance",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1961,7 +1961,7 @@
       "startDate": "2013-12-01",
       "endDate": "optional",
       "provider": "department-for-levelling-up-housing-and-communities",
-      "topic": "",
+      "topic": "government%20reference%20data,digital%20service%20performance",
       "dateAdded": "2020-11-05"
     },
     {
@@ -1990,7 +1990,7 @@
       "areaServed": "",
       "startDate": "",
       "endDate": "",
-      "provider": "defra",
+      "provider": "department-for-environment-food-rural-affairs",
       "topic": "environment",
       "dateAdded": "2020-02-26"
     },
@@ -2006,7 +2006,7 @@
       "startDate": "2021-03-01",
       "endDate": "",
       "provider": "buckinghamshire-council",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2021-03-09"
     },
     {
@@ -2020,8 +2020,8 @@
       "areaServed": "England and Wales",
       "startDate": "2021-05-04",
       "endDate": "",
-      "provider": "Insolvency-service",
-      "topic": "crime%20and%20justice",
+      "provider": "insolvency-service",
+      "topic": "crime%20and%20justice,society",
       "dateAdded": "2021-03-09"
     },
     {
@@ -2036,7 +2036,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "home-office",
-      "topic": "health",
+      "topic": "health,society",
       "dateAdded": "2021-07-21"
     },
     {
@@ -2051,7 +2051,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "department-for-transport",
-      "topic": "",
+      "topic": "transport,towns%20and%20cities",
       "dateAdded": "2022-01-07"
     },
     {
@@ -2096,7 +2096,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "cefas",
-      "topic": "",
+      "topic": "transport,environment,defence",
       "dateAdded": "2022-01-31"
     },
     {
@@ -2111,7 +2111,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "bgs",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-01"
     },
     {
@@ -2126,7 +2126,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "bgs",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-01"
     },
     {
@@ -2141,7 +2141,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "bgs",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-01"
     },
     {
@@ -2156,7 +2156,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "uk-hydrographic-office",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-03"
     },
     {
@@ -2171,7 +2171,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "uk-hydrographic-office",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-03"
     },
     {
@@ -2186,7 +2186,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "uk-hydrographic-office",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-03"
     },
     {
@@ -2201,7 +2201,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "uk-hydrographic-office",
-      "topic": "",
+      "topic": "mapping,environment,defence",
       "dateAdded": "2022-02-03"
     },
     {
@@ -2216,7 +2216,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "department-for-international-trade",
-      "topic": "",
+      "topic": "government,business%20and%20economy",
       "dateAdded": "2022-02-15"
     },
     {
@@ -2231,7 +2231,7 @@
       "startDate": "",
       "endDate": "",
       "provider": "department-for-international-trade",
-      "topic": "",
+      "topic": "business%20and%20economy",
       "dateAdded": "2022-02-15"
     },
     {
@@ -2245,8 +2245,8 @@
       "areaServed": "",
       "startDate": "",
       "endDate": "",
-      "provider": "hm-land-registry",
-      "topic": "",
+      "provider": "land-registry",
+      "topic": "mapping,towns%20and%20cities",
       "dateAdded": "2022-09-28"
     },
     {
@@ -2260,7 +2260,7 @@
       "areaServed": "",
       "startDate": "",
       "endDate": "",
-      "provider": "hm-land-registry",
+      "provider": "land-registry",
       "topic": "",
       "dateAdded": "2022-10-11"
     },
@@ -2275,8 +2275,8 @@
       "areaServed": "",
       "startDate": "",
       "endDate": "",
-      "provider": "hm-land-registry",
-      "topic": "",
+      "provider": "land-registry",
+      "topic": "digital%20service%20performance",
       "dateAdded": "2022-11-24"
     },
     {
@@ -2290,7 +2290,7 @@
       "areaServed": "",
       "startDate": "",
       "endDate": "",
-      "provider": "hm-land-registry",
+      "provider": "land-registry",
       "topic": "mapping",
       "dateAdded": "2023-01-10"
     }
