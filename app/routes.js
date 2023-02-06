@@ -30,6 +30,13 @@ const init =  async function() {
 
 // SPRINT 1 ROUTES
 router.get('/s1/start', async function(req,res) {
+    let topics =  global.index.data.aggregations.topic.buckets;
+    topics = topics.map(function(e) {
+        const newTopic = global.topics.find(topic => topic.id == e.key);
+        newTopic.count = e.doc_count;
+        return newTopic;
+    });
+    console.log(topics);
     const orgs = await helpers.enrichOrgs(global.organisations);
     const endpbs = orgs.filter( org => org.format == 'Executive non-departmental public body');
     const mds = orgs.filter( org => org.format == 'Ministerial department');
@@ -38,7 +45,7 @@ router.get('/s1/start', async function(req,res) {
     const so = orgs.filter( org => org.format == 'Sub organisation');
     const pc = orgs.filter( org => org.format == 'Public corporation');
     const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
-    res.render("s1/start", { topics: global.topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
+    res.render("s1/start", { topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
 router.get('/s1/find', function(req, res) {  
     let items = global.resources;  
