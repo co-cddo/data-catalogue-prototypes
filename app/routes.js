@@ -30,7 +30,8 @@ const init =  async function() {
 
 // SPRINT 1 ROUTES
 router.get('/s1/start', async function(req,res) {
-    const orgs = await helpers.enrichOrgs(global.organisations);
+    let orgs = global.organisations;
+    orgs = await helpers.enrichOrgs(orgs);
     const endpbs = orgs.filter( org => org.format == 'Executive non-departmental public body');
     const mds = orgs.filter( org => org.format == 'Ministerial department');
     const nmds = orgs.filter( org => org.format == 'Non-ministerial department');
@@ -68,7 +69,10 @@ router.get('/s1/find', function(req, res) {
                 return true;
             })
         }
+        console.log('Time to search');
+        console.log(appliedFilters);
         const results = search(searchTerm, appliedFilters);
+        console.log(JSON.stringify(results, 0, 2));
         items = results.data.items;
         aggregations = results.data.aggregations;
     }
