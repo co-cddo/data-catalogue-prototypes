@@ -1,0 +1,46 @@
+.gem-c-contextual-sidebar__related-links {
+  border-top: 2px solid $govuk-brand-colour;
+}
+
+.gem-c-contextual-sidebar__heading {
+  margin-top: govuk-spacing(3);
+  margin-bottom: govuk-spacing(2);
+  color: $govuk-text-colour;
+}
+
+.gem-c-contextual-sidebar__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gem-c-contextual-sidebar__text {
+  @include govuk-font(16);
+  margin-bottom: govuk-spacing(1);
+  @include govuk-media-query($from: tablet) {
+    margin-bottom: govuk-spacing(2);
+  }
+}
+
+.gem-c-contextual-sidebar__cta {
+  border-top: 2px solid $govuk-brand-colour;
+  margin-bottom: govuk-spacing(6);
+  background-color: govuk-colour("light-grey", $legacy: "grey-4");
+  display: block;
+  padding: 0 govuk-spacing(3) govuk-spacing(3);
+  text-decoration: none;
+}
+
+.gem-c-contextual-sidebar__cta--ukraine {
+  border-top: 7px solid #fed700;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -14px;
+    border-top: 7px solid #4b7ec1;
+  }
+}
