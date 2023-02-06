@@ -1,4 +1,6 @@
 {% extends "layouts/main.html" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% block pageTitle %}
   {{ resource.title }} - Sprint 1
 {% endblock %}
@@ -23,6 +25,11 @@
 </p>
 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Contact</h2>
 {{ resource.contact | govukMarkdown | safe }}</p>
+
+{{ govukButton({
+  text: "Organise a data share agreement",
+  href: '#'
+}) }}
 
 <!-- <h2>Raw data for debugging</h2>
 <code>
