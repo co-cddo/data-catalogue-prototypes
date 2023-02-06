@@ -1,0 +1,8 @@
+<h2 class="govuk-heading-m">{{ orgListingTitle }}</h2>
+<ul class="govuk-list datacat-row-of-threes">
+    {% for org in orgListing | sort(false,false, 'id') %}
+        <li class="govuk-!-margin-bottom-3">
+            <a class="govuk-link" href="/s1/find?organisationFilters={{ org.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ org.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

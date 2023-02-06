@@ -6,6 +6,8 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 const { promises: fs } = require("fs");
+const got = require('got');
+let cache = {};
 let itemsjs;
 let items;
 
@@ -27,8 +29,16 @@ const init =  async function() {
 }
 
 // SPRINT 1 ROUTES
-router.get('/s1/start', function(req,res) {
-    res.render("s1/start", { topics: global.topics, organisations: global.organisations });
+router.get('/s1/start', async function(req,res) {
+    const orgs = await helpers.enrichOrgs(global.organisations);
+    const endpbs = orgs.filter( org => org.format == 'Executive non-departmental public body');
+    const mds = orgs.filter( org => org.format == 'Ministerial department');
+    const nmds = orgs.filter( org => org.format == 'Non-ministerial department');
+    const ea = orgs.filter( org => org.format == 'Executive agency');
+    const so = orgs.filter( org => org.format == 'Sub organisation');
+    const pc = orgs.filter( org => org.format == 'Public corporation');
+    const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
+    res.render("s1/start", { topics: global.topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
 router.get('/s1/find', function(req, res) {  
     let items = global.resources;  
@@ -197,6 +207,37 @@ const helpers = {
             return newTopic;
         });
         return topics;
+    },
+    async enrichOrgs(orgs) {
+        let promises = [];
+        orgs.forEach(function(org) {
+            const promise = 
+            helpers.enrichOrg(org)
+                .then((newOrg) => {
+                    return newOrg;
+                })
+                .catch((err) => {
+                    throw Error(err);
+                });
+            promises.push(promise);
+        })
+        return Promise.all(promises);
+    },
+    async enrichOrg(org) {
+        const url = 'https://www.gov.uk/api/organisations/' + org.id;
+        if(cache[url]) {
+            return promise.then( () => cache[url]);
+        }
+        else {
+            return got(url).json().then((data) => {
+                org.format = data.format;
+                org.details = data.details;
+                return org;
+            }).catch((error) => {
+                console.error(error.code);
+                return org;
+            });
+        }
     },
     generateFilterItems(items, valueKey, textKey, groupId, aggregation) {
         return aggregation.buckets.map(function(e) {

@@ -71,6 +71,34 @@
             </li>
         {% endfor %}
     </ul>
+    <h2 class="govuk-heading-l">Browse by organisation</h2>
+    {% set orgListingTitle = "Ministerial departments" %}
+    {% set orgListing = mds %}
+    {% include "_includes/org-listing.njk" %}
+    
+    {% set orgListingTitle = "Non-ministerial departments" %}
+    {% set orgListing = nmds %}
+    {% include "_includes/org-listing.njk" %}
+    
+    {% set orgListingTitle = "Executive non-departmental public bodies" %}
+    {% set orgListing = endpbs %}
+    {% include "_includes/org-listing.njk" %}
+
+    {% set orgListingTitle = "Executive agencies" %}
+    {% set orgListing = ea %}
+    {% include "_includes/org-listing.njk" %}
+
+    <!-- {% set orgListingTitle = "Public corporation" %}
+    {% set orgListing = pc %}
+    {% include "_includes/org-listing.njk" %}
+
+    {% set orgListingTitle = "Sub organisation" %}
+    {% set orgListing = so %}
+    {% include "_includes/org-listing.njk" %} -->
+
+    {% set orgListingTitle = "Others" %}
+    {% set orgListing = others %}
+    {% include "_includes/org-listing.njk" %}
   <h2 class="govuk-heading-l">Browse by organisation</h2>
   <ul class="govuk-list datacat-row-of-threes">
         {% for org in organisations | sort(false,false, 'id') %}
