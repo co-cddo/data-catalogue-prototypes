@@ -27,6 +27,19 @@ const init =  async function() {
 }
 
 // SPRINT 1 ROUTES
+router.get('/s1/start', async function(req,res) {
+    let orgs = global.organisations;
+    orgs = await helpers.enrichOrgs(orgs);
+    const endpbs = orgs.filter( org => org.format == 'Executive non-departmental public body');
+    const mds = orgs.filter( org => org.format == 'Ministerial department');
+    const nmds = orgs.filter( org => org.format == 'Non-ministerial department');
+    const ea = orgs.filter( org => org.format == 'Executive agency');
+    const so = orgs.filter( org => org.format == 'Sub organisation');
+    const pc = orgs.filter( org => org.format == 'Public corporation');
+    const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
+    res.render("s1/start", { topics: global.topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
+})
+
 router.get('/s1/find', function(req, res) {  
     let items = global.resources;  
     let searchTerm;
@@ -56,6 +69,7 @@ router.get('/s1/find', function(req, res) {
             })
         }
         const results = search(searchTerm, appliedFilters);
+        // console.log(JSON.stringify(results, 0, 2));
         items = results.data.items;
         aggregations = results.data.aggregations;
     }
