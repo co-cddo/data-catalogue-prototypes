@@ -84,7 +84,8 @@ router.get('/s1/find', function(req, res) {
 })
 
 router.get('/s1/resources/:resourceID', function(req, res) {
-    const resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s1/resource')) ? '/s1/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
     res.render("s1/resource", { resource: resource, backLink: backLink });
@@ -178,21 +179,24 @@ const helpers = {
             return "";
         });
     },
-    enrichTopics(items) {
-        items.forEach(function(item, index) {
-            if(typeof item.topic == 'undefined') {
-                return;
-            }
-            const topics = item.topic.map(function(e) {
-                if(typeof e == 'object') {
-                    return e;
-                }
-                const newTopic = global.topics.find(topic => topic.id == e);
-                return newTopic;
-            });
-            items[index].topic = topics;
+    enrichTopics(resources) {
+        resources.forEach(function(resource, index) {
+            resources[index].topic = helpers.enrichTopic(resource.topic);
         });
-        return items;
+        return resources;
+    },
+    enrichTopic(topic) {
+        if(typeof topic == 'undefined') {
+            return;
+        }
+        const topics = topic.map(function(e) {
+            if(typeof e == 'object') {
+                return e;
+            }
+            const newTopic = global.topics.find(topic => topic.id == e);
+            return newTopic;
+        });
+        return topics;
     },
     generateFilterItems(items, valueKey, textKey, groupId, aggregation) {
         return aggregation.buckets.map(function(e) {
