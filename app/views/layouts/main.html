@@ -4,7 +4,6 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 #}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
-{% set bodyAttributes = { 'data-module' : 'edge' } %}
 {% extends "govuk-prototype-kit/layouts/govuk-branded.html" %}
 
 {% block header %}
@@ -14,7 +13,7 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
         serviceUrl: "/",
         containerClasses: "govuk-width-container"
     }) }}
-    <div class="govuk-width-container">
+    <div class="govuk-width-container" data-module="edge">
         {{ govukPhaseBanner({
             tag: {
             text: "alpha"

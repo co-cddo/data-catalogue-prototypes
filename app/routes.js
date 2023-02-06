@@ -6,6 +6,8 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 const { promises: fs } = require("fs");
+const got = require('got');
+let cache = {};
 let itemsjs;
 let items;
 
@@ -45,7 +47,6 @@ router.get('/s1/start', async function(req,res) {
     const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
     res.render("s1/start", { topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
-
 router.get('/s1/find', function(req, res) {  
     let items = global.resources;  
     let searchTerm;
@@ -101,7 +102,8 @@ router.get('/s1/find', function(req, res) {
 })
 
 router.get('/s1/resources/:resourceID', function(req, res) {
-    const resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s1/resource')) ? '/s1/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
     res.render("s1/resource", { resource: resource, backLink: backLink });
@@ -165,14 +167,12 @@ const helpers = {
                 n.issuing_body_readable = e.data.organisation;
                 n.issuing_body = issuing_body;
                 n.topic = helpers.splitTopics(topic);
-                n.contact = e.data.contact;
             }
             else {
                 n.title = e.name;
                 n.description = e.description;
                 n.issuing_body = e.provider;
                 n.issuing_body_readable = helpers.getOrgTitle(e.provider);
-                n.contact = e.maintainer;
                 if(e.topic) {
                     n.topic = helpers.splitTopics(e.topic);
                 }
@@ -197,21 +197,55 @@ const helpers = {
             return "";
         });
     },
-    enrichTopics(items) {
-        items.forEach(function(item, index) {
-            if(typeof item.topic == 'undefined') {
-                return;
-            }
-            const topics = item.topic.map(function(e) {
-                if(typeof e == 'object') {
-                    return e;
-                }
-                const newTopic = global.topics.find(topic => topic.id == e);
-                return newTopic;
-            });
-            items[index].topic = topics;
+    enrichTopics(resources) {
+        resources.forEach(function(resource, index) {
+            resources[index].topic = helpers.enrichTopic(resource.topic);
         });
-        return items;
+        return resources;
+    },
+    enrichTopic(topic) {
+        if(typeof topic == 'undefined') {
+            return;
+        }
+        const topics = topic.map(function(e) {
+            if(typeof e == 'object') {
+                return e;
+            }
+            const newTopic = global.topics.find(topic => topic.id == e);
+            return newTopic;
+        });
+        return topics;
+    },
+    async enrichOrgs(orgs) {
+        let promises = [];
+        orgs.forEach(function(org) {
+            const promise = 
+            helpers.enrichOrg(org)
+                .then((newOrg) => {
+                    return newOrg;
+                })
+                .catch((err) => {
+                    throw Error(err);
+                });
+            promises.push(promise);
+        })
+        return Promise.all(promises);
+    },
+    async enrichOrg(org) {
+        const url = 'https://www.gov.uk/api/organisations/' + org.id;
+        if(cache[url]) {
+            return promise.then( () => cache[url]);
+        }
+        else {
+            return got(url).json().then((data) => {
+                org.format = data.format;
+                org.details = data.details;
+                return org;
+            }).catch((error) => {
+                console.error(error.code);
+                return org;
+            });
+        }
     },
     generateFilterItems(items, valueKey, textKey, groupId, aggregation) {
         return aggregation.buckets.map(function(e) {
