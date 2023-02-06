@@ -40,7 +40,7 @@
       "alternateName": "DfE"
     },
     {
-      "id": "department-for-work-and-pensions",
+      "id": "department-for-work-pensions",
       "name": "Department for Work and Pensions",
       "alternateName": "DWP"
     },
@@ -105,7 +105,7 @@
       "alternateName": "DLUHC"
     },
     {
-      "id": "defra",
+      "id": "department-for-environment-food-rural-affairs",
       "name": "Department for Environment, Food and Rural Affairs",
       "alternateName": "Defra"
     },
@@ -115,7 +115,7 @@
       "alternateName": "BCC"
     },
     {
-      "id": "Insolvency-service",
+      "id": "insolvency-service",
       "name": "Insolvency Service",
       "alternateName": "IS"
     },
@@ -145,7 +145,7 @@
       "alternateName": "BGS"
     },
     {
-      "id": "hm-land-registry",
+      "id": "land-registry",
       "name": "HM Land Registry",
       "alternateName": "HMLR"
     },
