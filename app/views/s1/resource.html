@@ -23,6 +23,11 @@
 <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
     {{ resource.description | replace("\\n\\n", "\n\n") | govukMarkdown | safe  }}
 </p>
+
+
+<h2 class="govuk-heading-m govuk-!-margin-bottom-2">Documentation</h2>
+{{ resource.documentation | govukMarkdown | safe }}</p>
+
 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Contact</h2>
 {{ resource.contact | govukMarkdown | safe }}</p>
 
