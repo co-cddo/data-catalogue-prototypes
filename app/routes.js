@@ -179,6 +179,7 @@ const helpers = {
                     n.topic = helpers.splitTopics(e.topic);
                 }
             }
+            n.url = e.url;
             n.slug = n.title.toLowerCase().replaceAll(' ','-');
             return n;
         }
