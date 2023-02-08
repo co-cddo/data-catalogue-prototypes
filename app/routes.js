@@ -166,6 +166,7 @@ const helpers = {
                 n.issuing_body = issuing_body;
                 n.topic = helpers.splitTopics(topic);
                 n.contact = e.data.contact;
+                n.documentation = e.data['documentation-url'];
             }
             else {
                 n.title = e.name;
@@ -173,10 +174,12 @@ const helpers = {
                 n.issuing_body = e.provider;
                 n.issuing_body_readable = helpers.getOrgTitle(e.provider);
                 n.contact = e.maintainer;
+                n.documentation = e.documentation;
                 if(e.topic) {
                     n.topic = helpers.splitTopics(e.topic);
                 }
             }
+            n.url = e.url;
             n.slug = n.title.toLowerCase().replaceAll(' ','-');
             return n;
         }

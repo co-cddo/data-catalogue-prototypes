@@ -23,11 +23,22 @@
 <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
     {{ resource.description | replace("\\n\\n", "\n\n") | govukMarkdown | safe  }}
 </p>
+
+{% if resource.url %}
+<h2 class="govuk-heading-m govuk-!-margin-bottom-2">End point</h2>
+{{ resource.url | govukMarkdown | safe }}</p>
+{% endif %}
+
+{% if resource.documentation %}
+<h2 class="govuk-heading-m govuk-!-margin-bottom-2">Documentation</h2>
+{{ resource.documentation | govukMarkdown | safe }}</p>
+{% endif %}
+
 <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Contact</h2>
 {{ resource.contact | govukMarkdown | safe }}</p>
 
 {{ govukButton({
-  text: "Organise a data share agreement",
+  text: "Organise a data share agreement with " + resource.issuing_body_readable,
   href: '#'
 }) }}
 
