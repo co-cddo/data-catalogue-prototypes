@@ -29,7 +29,8 @@ const init =  async function() {
 }
 
 // SPRINT 1 ROUTES
-router.get('/s1/start', async function(req,res) {
+let sprint = 's1';
+router.get('/' + sprint + '/start', async function(req,res) {
     let topics =  global.index.data.aggregations.topic.buckets;
     topics = topics.map(function(e) {
         const newTopic = global.topics.find(topic => topic.id == e.key);
@@ -44,9 +45,9 @@ router.get('/s1/start', async function(req,res) {
     const so = orgs.filter( org => org.format == 'Sub organisation');
     const pc = orgs.filter( org => org.format == 'Public corporation');
     const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
-    res.render("s1/start", { topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
+    res.render(sprint + "/start", { sprint: sprint, topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
-router.get('/s1/find', function(req, res) {  
+router.get('/' + sprint + '/find', function(req, res) {  
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -96,19 +97,20 @@ router.get('/s1/find', function(req, res) {
     items = helpers.enrichTopics(items);
     // console.log(JSON.stringify(items, 0, 2));
     req.session.current_url = req.originalUrl;
-    res.render("s1/find", { resources: items, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
+    res.render(sprint + "/find", { sprint: sprint, resources: items, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
 })
 
-router.get('/s1/resources/:resourceID', function(req, res) {
+router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
     let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
     resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s1/resource')) ? '/s1/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
-    res.render("s1/resource", { resource: resource, backLink: backLink });
+    res.render(sprint +  "/resource", { sprint: sprint, resource: resource, backLink: backLink });
 })
 
 // SPRINT 2 ROUTES
-router.get('/s2/start', async function(req,res) {
+sprint = 's2';
+router.get('/' + sprint +  '/start', async function(req,res) {
     let topics =  global.index.data.aggregations.topic.buckets;
     topics = topics.map(function(e) {
         const newTopic = global.topics.find(topic => topic.id == e.key);
@@ -123,9 +125,9 @@ router.get('/s2/start', async function(req,res) {
     const so = orgs.filter( org => org.format == 'Sub organisation');
     const pc = orgs.filter( org => org.format == 'Public corporation');
     const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
-    res.render("s2/start", { topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
+    res.render("s2/start", { sprint: sprint, topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
-router.get('/s2/find', function(req, res) {  
+router.get('/' + sprint + '/find', function(req, res) {  
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -170,20 +172,21 @@ router.get('/s2/find', function(req, res) {
             items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
         }
     ]
-    
+    // console.log(JSON.stringify(filters, 0, 2));
     const count = items.length;
     items = helpers.enrichTopics(items);
+    const selectedFilters = helpers.getSelectedFilters(filters);
     // console.log(JSON.stringify(items, 0, 2));
     req.session.current_url = req.originalUrl;
-    res.render("s2/find", { resources: items, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
+    res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
 })
 
-router.get('/s2/resources/:resourceID', function(req, res) {
+router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
     let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
     resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s2/resource')) ? '/s1/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
-    res.render("s2/resource", { resource: resource, backLink: backLink });
+    res.render(sprint + "/resource", { sprint: sprint, resource: resource, backLink: backLink });
 })
 
 
@@ -356,6 +359,35 @@ const helpers = {
             }
         }
         return name;
+    },
+    getSelectedFilters(filters) {
+        let categories =  filters.map(function(c) {
+            let category = {};
+            category.items = c.items.filter(function(item) {
+                if(item.checked !== 'checked') {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }).map(function(b) {
+                const item = {
+                    href: '#',
+                    text: b.text
+                }
+                return item;
+            });
+
+            if(category.items.length > 0) {
+                category.heading = {
+                    text: c.title
+                }
+            }
+            
+            return category;
+        });
+        console.log(JSON.stringify(categories, 0, 2));
+        return categories;
     }
 }
 

@@ -67,7 +67,7 @@
         {% for topic in topics | sort(true, false, 'count') %}
             <li class="gem-c-cards__list-item">
                 <div class="gem-c-cards__list-item-wrapper" data-count="{{ topic.count }}">
-                    <h3 class="govuk-heading-s gem-c-cards__sub-heading"><a class="govuk-link gem-c-cards__link" href="/s1/find?topicFilters={{ topic.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ topic.name }}</a></h3>
+                    <h3 class="govuk-heading-s gem-c-cards__sub-heading"><a class="govuk-link gem-c-cards__link" href="/s2/find?topicFilters={{ topic.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ topic.name }}</a></h3>
                     <p class="govuk-body gem-c-cards__description">{{topic.description}}</p>
                 </div>
             </li>
