@@ -107,6 +107,85 @@ router.get('/s1/resources/:resourceID', function(req, res) {
     res.render("s1/resource", { resource: resource, backLink: backLink });
 })
 
+// SPRINT 2 ROUTES
+router.get('/s2/start', async function(req,res) {
+    let topics =  global.index.data.aggregations.topic.buckets;
+    topics = topics.map(function(e) {
+        const newTopic = global.topics.find(topic => topic.id == e.key);
+        newTopic.count = e.doc_count;
+        return newTopic;
+    });
+    const orgs = await helpers.enrichOrgs(global.organisations);
+    const endpbs = orgs.filter( org => org.format == 'Executive non-departmental public body');
+    const mds = orgs.filter( org => org.format == 'Ministerial department');
+    const nmds = orgs.filter( org => org.format == 'Non-ministerial department');
+    const ea = orgs.filter( org => org.format == 'Executive agency');
+    const so = orgs.filter( org => org.format == 'Sub organisation');
+    const pc = orgs.filter( org => org.format == 'Public corporation');
+    const others = [].concat(so, pc, orgs.filter( org => typeof org.format == 'undefined')); 
+    res.render("s2/start", { topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
+})
+router.get('/s2/find', function(req, res) {  
+    let items = global.resources;  
+    let searchTerm;
+    let appliedFilters = {};
+    let aggregations = global.index.data.aggregations;
+    let anyFiltersActive = false;
+    if (Object.keys(req.query).length !== 0) {
+        if(req.query.q) {
+            searchTerm = req.query.q;
+        }
+        if(Array.isArray(req.query.organisationFilters)) {
+            anyFiltersActive = true;
+            appliedFilters.issuing_body = req.query.organisationFilters.filter(function(e) {
+                if(e == '_unchecked') {
+                    return false;
+                }
+                return true;
+            })
+        }
+        if(Array.isArray(req.query.topicFilters)) {
+            appliedFilters.topic = req.query.topicFilters.filter(function(e) {
+                anyFiltersActive = true;
+                if(e == '_unchecked') {
+                    return false;
+                }
+                return true;
+            })
+        }
+        const results = search(searchTerm, appliedFilters);
+        items = results.data.items;
+        aggregations = results.data.aggregations;
+    }
+    
+    const filters = [
+        {
+            title: 'Topics',
+            id: 'topicFilters',
+            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
+        },
+        {
+            title: 'Organisations',
+            id: 'organisationFilters',
+            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
+        }
+    ]
+    
+    const count = items.length;
+    items = helpers.enrichTopics(items);
+    // console.log(JSON.stringify(items, 0, 2));
+    req.session.current_url = req.originalUrl;
+    res.render("s2/find", { resources: items, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
+})
+
+router.get('/s2/resources/:resourceID', function(req, res) {
+    let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    resource.topic = helpers.enrichTopic(resource.topic);
+    let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s2/resource')) ? '/s1/find' : req.session.current_url;
+    req.session.current_url = req.originalUrl;
+    res.render("s2/resource", { resource: resource, backLink: backLink });
+})
+
 
 const searchSetup = function(data) {
     const configuration = {

@@ -1,0 +1,111 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.html" %}
+
+{% block pageTitle %}
+  {{ serviceName }}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader() }}
+  <div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+      <div class="govuk-phase-banner x-govuk-phase-banner--inverse">
+    <p class="govuk-phase-banner__content">
+      <strong class="govuk-tag govuk-phase-banner__content__tag x-govuk-tag--inverse">
+        Alpha
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This is a new service
+      </span>
+    </p>
+  </div>
+  
+  <h1 class="x-govuk-masthead__title">
+    Find government data
+  </h1>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+          <p class="x-govuk-masthead__description govuk-!-margin-bottom-3">
+            Search for government API’s, data services and data sets that are available to share between departments.
+            <p class="x-govuk-masthead__description govuk-!-margin-bottom-3">You can find out whether the data you need is available and how to request access to it.</p>
+            <p class="x-govuk-masthead__description govuk-!-margin-bottom-6">You cannot access the data itself. Once you have found the data you need, contact the department that holds it to request they share it with you.</p>
+            <form action="/s1/find" method="GET">
+                <div class="gem-c-search gem-c-search--on-govuk-blue govuk-!-margin-bottom-0">
+                    <label for="search" class="gem-c-search__label govuk-label">Search the Data Catalogue</label>
+                    <div class="gem-c-search__item-wrapper">
+                        <input aria-controls="js-search-results-info" class="gem-c-search__item gem-c-search__input govuk-input js-class-toggle" id="search" name="q" title="Search" type="search" value="">
+                        <div class="gem-c-search__item">
+                                <button class="gem-c-search__submit" type="submit" enterkeyhint="search">Search
+                            <svg class="gem-c-search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                            </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+        </div>
+        
+        <div class="govuk-grid-column-one-third-from-desktop">
+            <div class="data-cat-masthead__aside">
+                <h2 class="govuk-heading-m datacat-color-white">Recently added</h2>
+                <ul class="govuk-list datacat-color-white">
+                    <li><a href="#">Goods Vehicle Movements</a></li>
+                    <li><a href="#">OS Maps API</a></li>
+                    <li><a href="#">Display vacancy advert API</a></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <h2 class="govuk-heading-l">Browse by topic</h2>
+  <ul class="gem-c-cards__list govuk-!-margin-bottom-6">
+        {% for topic in topics | sort(true, false, 'count') %}
+            <li class="gem-c-cards__list-item">
+                <div class="gem-c-cards__list-item-wrapper" data-count="{{ topic.count }}">
+                    <h3 class="govuk-heading-s gem-c-cards__sub-heading"><a class="govuk-link gem-c-cards__link" href="/s1/find?topicFilters={{ topic.id | urlencode }}&topicFilters=_unchecked&organisationFilters=_unchecked">{{ topic.name }}</a></h3>
+                    <p class="govuk-body gem-c-cards__description">{{topic.description}}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <h2 class="govuk-heading-l">Browse by organisation</h2>
+    {% set orgLogos = true %}
+    {% set orgListingTitle = "Ministerial departments" %}
+    {% set orgListing = mds %}
+    {% include "_includes/org-listing.njk" %}
+    
+    {% set orgLogos = false %}
+    {% set orgListingTitle = "Non-ministerial departments" %}
+    {% set orgListing = nmds %}
+    {% include "_includes/org-listing.njk" %}
+    
+    {% set orgListingTitle = "Executive non-departmental public bodies" %}
+    {% set orgListing = endpbs %}
+    {% include "_includes/org-listing.njk" %}
+
+    {% set orgListingTitle = "Executive agencies" %}
+    {% set orgListing = ea %}
+    {% include "_includes/org-listing.njk" %}
+
+    <!-- {% set orgListingTitle = "Public corporation" %}
+    {% set orgListing = pc %}
+    {% include "_includes/org-listing.njk" %}
+
+    {% set orgListingTitle = "Sub organisation" %}
+    {% set orgListing = so %}
+    {% include "_includes/org-listing.njk" %} -->
+
+    {% set orgListingTitle = "Others" %}
+    {% set orgListing = others %}
+    {% include "_includes/org-listing.njk" %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="/public/javascripts/jquery-3.6.3.min.js"></script>
+{% endblock %}
