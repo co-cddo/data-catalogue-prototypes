@@ -18,7 +18,7 @@
 <p class="govuk-!-margin-bottom-3">
     <h2 class="govuk-visually-hidden">Topics:</h3>
     {% include "_includes/topics.njk" %}
-</p>
+</p>\
 {% endif %}
 <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
     {{ resource.description | replace("\\n\\n", "\n\n") | govukMarkdown | safe  }}
