@@ -72,6 +72,10 @@
     overflow: hidden;
   }
   
-.moj-filter__tag::after {
+.moj-filter__tag:after {
     background-image: image-url('icon-tag-remove-cross.svg');
+}
+
+.moj-filter__tag:hover:after {
+    background-image: image-url('icon-tag-remove-cross-white.svg') !important;
 }
