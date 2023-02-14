@@ -84,7 +84,7 @@ router.get('/' + sprint + '/find', function(req, res) {
         {
             title: 'Topics',
             id: 'topicFilters',
-            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
+            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic)
         },
         {
             title: 'Organisations',
@@ -165,13 +165,15 @@ router.get('/' + sprint + '/find', function(req, res) {
             title: 'Topics',
             id: 'topicFilters',
             items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
-            expanded: 'true'
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.topic.buckets)
         },
         {
             title: 'Organisations',
             id: 'organisationFilters',
             items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
-            expanded: 'true'
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.issuing_body.buckets)
         }
     ]
     // console.log(JSON.stringify(filters, 0, 2));
@@ -390,6 +392,13 @@ const helpers = {
         });
         // console.log(JSON.stringify(categories, 0, 2));
         return categories;
+    },
+    getSelectedFiltersCount(items) {
+        // console.log(items);
+        const selectedItems = items.filter(function(item) {
+             return item.selected;  
+        });
+        return selectedItems.length;
     }
 }
 
