@@ -128,7 +128,6 @@ router.get('/' + sprint +  '/start', async function(req,res) {
     res.render("s2/start", { sprint: sprint, topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
 router.get('/' + sprint + '/find', function(req, res) {  
-    let clearlinkUrl = req.path + '?q=' + req.query.q;
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -180,8 +179,8 @@ router.get('/' + sprint + '/find', function(req, res) {
     // console.log(JSON.stringify(filters, 0, 2));
     const count = items.length;
     items = helpers.enrichTopics(items);
-    const selectedFilters = helpers.getSelectedFilters(filters, req.url);
-    // console.log(JSON.stringify(items, 0, 2));
+    const clearlinkUrl = req.path + '?q=' + req.query.q;
+    const selectedFilters = helpers.getSelectedFilters(filters, req.url, clearlinkUrl);
     req.session.current_url = req.originalUrl;
     res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
 })
@@ -365,8 +364,17 @@ const helpers = {
         }
         return name;
     },
-    getSelectedFilters(filters, currentUrl) {
-        let categories =  filters.map(function(c) {
+    getSelectedFilters(filters, currentUrl, clearlinkUrl) {
+        let selectedFilters =  {
+            heading: {
+            text: 'Selected filters'
+            },
+            clearLink: {
+            text: 'Clear filters',
+            href: clearlinkUrl
+            }
+        };
+        selectedFilters.categories =  filters.map(function(c) {
             let category = {};
             category.items = c.items.filter(function(item) {
                 if(item.checked !== 'checked') {
@@ -376,24 +384,28 @@ const helpers = {
                     return true;
                 }
             }).map(function(b) {
-                console.log(b);
                 const item = {
                     href: currentUrl + '&removeFilter=' + b.value,
                     text: b.text
                 }
                 return item;
             });
-
-            if(category.items.length > 0) {
-                category.heading = {
-                    text: c.title
-                }
+            category.heading = {
+                text: c.title
             }
-            
+
             return category;
         });
-        // console.log(JSON.stringify(categories, 0, 2));
-        return categories;
+        selectedFilters.categories = selectedFilters.categories.filter(function(category) {
+            if(category.items.length == 0) {
+                return false;
+            }
+            return true;
+        });
+        if(selectedFilters.categories.length == 0){
+            return false;
+        }
+        return selectedFilters;
     },
     getSelectedFiltersCount(items) {
         // console.log(items);
