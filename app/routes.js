@@ -140,7 +140,7 @@ router.get('/' + sprint + '/find', function(req, res) {
         if(Array.isArray(req.query.organisationFilters)) {
             anyFiltersActive = true;
             appliedFilters.issuing_body = req.query.organisationFilters.filter(function(e) {
-                if(e == '_unchecked') {
+                if(e == '_unchecked' || e == req.query.removeFilter) {
                     return false;
                 }
                 return true;
@@ -149,7 +149,7 @@ router.get('/' + sprint + '/find', function(req, res) {
         if(Array.isArray(req.query.topicFilters)) {
             appliedFilters.topic = req.query.topicFilters.filter(function(e) {
                 anyFiltersActive = true;
-                if(e == '_unchecked') {
+                if(e == '_unchecked' || e == req.query.removeFilter) {
                     return false;
                 }
                 return true;
@@ -179,7 +179,7 @@ router.get('/' + sprint + '/find', function(req, res) {
     // console.log(JSON.stringify(filters, 0, 2));
     const count = items.length;
     items = helpers.enrichTopics(items);
-    const selectedFilters = helpers.getSelectedFilters(filters);
+    const selectedFilters = helpers.getSelectedFilters(filters, req.url);
     // console.log(JSON.stringify(items, 0, 2));
     req.session.current_url = req.originalUrl;
     res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
@@ -364,7 +364,7 @@ const helpers = {
         }
         return name;
     },
-    getSelectedFilters(filters) {
+    getSelectedFilters(filters, currentUrl) {
         let categories =  filters.map(function(c) {
             let category = {};
             category.items = c.items.filter(function(item) {
@@ -375,8 +375,9 @@ const helpers = {
                     return true;
                 }
             }).map(function(b) {
+                console.log(b);
                 const item = {
-                    href: '#',
+                    href: currentUrl + '&removeFilter=' + b.value,
                     text: b.text
                 }
                 return item;
