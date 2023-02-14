@@ -128,6 +128,7 @@ router.get('/' + sprint +  '/start', async function(req,res) {
     res.render("s2/start", { sprint: sprint, topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
 router.get('/' + sprint + '/find', function(req, res) {  
+    let clearlinkUrl = req.path + '?q=' + req.query.q;
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -182,7 +183,7 @@ router.get('/' + sprint + '/find', function(req, res) {
     const selectedFilters = helpers.getSelectedFilters(filters, req.url);
     // console.log(JSON.stringify(items, 0, 2));
     req.session.current_url = req.originalUrl;
-    res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive });
+    res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
 })
 
 router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
