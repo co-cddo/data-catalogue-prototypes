@@ -7,17 +7,17 @@
 @import "govuk_publishing_components/components/helpers/brand-colours";
 @import "govuk_publishing_components/components/organisation-logo";
 @import "govuk_publishing_components/components/cards";
+@import "finder_frontend/option-select";
+@import "node_modules/@ministryofjustice/frontend/moj/components/filter/filter";
+@import "node_modules/@ministryofjustice/frontend/moj/objects/filter-layout";
+@import "overrides/moj-filter";
+@import "finder_frontend/expander";
 
 // Add extra styles here
 .result-list__item {
     padding: 0 0 15px;
     margin: 0 0 15px!important;
     border-bottom: 1px solid #b1b4b6;
-}
-.filter-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 .datacat-color-white {
     color: white !important;
