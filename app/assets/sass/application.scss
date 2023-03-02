@@ -14,6 +14,9 @@
 @import "finder_frontend/expander";
 
 // Add extra styles here
+.align-items-center {
+    align-items: center;
+}
 .result-list__item {
     padding: 0 0 15px;
     margin: 0 0 15px!important;
@@ -158,4 +161,12 @@
     margin-bottom: 15px!important;
     border-bottom: 1px solid #b1b4b6;
     padding-bottom: 15px;
+}
+.datacat-org-logos-img {
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+    img {
+        max-width: 100%;
+    }
 }

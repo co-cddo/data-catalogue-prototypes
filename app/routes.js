@@ -184,13 +184,24 @@ router.get('/' + sprint + '/find', function(req, res) {
     req.session.current_url = req.originalUrl;
     res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
 })
-
 router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
     let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
     resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s2/resource')) ? '/s1/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
     res.render(sprint + "/resource", { sprint: sprint, resource: resource, backLink: backLink });
+})
+
+// SPRINT 3 ROUTES
+sprint = 's3';
+router.get('/' + sprint +  '/start', async function(req,res) {
+    let topics =  global.index.data.aggregations.topic.buckets;
+    topics = topics.map(function(e) {
+        const newTopic = global.topics.find(topic => topic.id == e.key);
+        newTopic.count = e.doc_count;
+        return newTopic;
+    });
+    res.render(sprint + "/start", { sprint: sprint, topics: topics });
 })
 
 
