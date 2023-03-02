@@ -31,6 +31,7 @@ const init =  async function() {
 // SPRINT 1 ROUTES
 let sprint = 's1';
 router.get('/' + sprint + '/start', async function(req,res) {
+    sprint = 's1';
     let topics =  global.index.data.aggregations.topic.buckets;
     topics = topics.map(function(e) {
         const newTopic = global.topics.find(topic => topic.id == e.key);
@@ -48,6 +49,7 @@ router.get('/' + sprint + '/start', async function(req,res) {
     res.render(sprint + "/start", { sprint: sprint, topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
 router.get('/' + sprint + '/find', function(req, res) {  
+    sprint = 's1';
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -101,6 +103,7 @@ router.get('/' + sprint + '/find', function(req, res) {
 })
 
 router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
+    sprint = 's1';
     let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
     resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s1/resource')) ? '/s1/find' : req.session.current_url;
@@ -111,6 +114,7 @@ router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
 // SPRINT 2 ROUTES
 sprint = 's2';
 router.get('/' + sprint +  '/start', async function(req,res) {
+    sprint = 's2';
     let topics =  global.index.data.aggregations.topic.buckets;
     topics = topics.map(function(e) {
         const newTopic = global.topics.find(topic => topic.id == e.key);
@@ -128,6 +132,7 @@ router.get('/' + sprint +  '/start', async function(req,res) {
     res.render("s2/start", { sprint: sprint, topics: topics, organisations: orgs, endpbs: endpbs, mds: mds, nmds: nmds, ea: ea, so: so, pc: pc, others: others });
 })
 router.get('/' + sprint + '/find', function(req, res) {  
+    sprint = 's2';
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -185,6 +190,7 @@ router.get('/' + sprint + '/find', function(req, res) {
     res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
 })
 router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
+    sprint = 's2';
     let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
     resource.topic = helpers.enrichTopic(resource.topic);
     let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/s2/resource')) ? '/s1/find' : req.session.current_url;
@@ -195,13 +201,14 @@ router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
 // SPRINT 3 ROUTES
 sprint = 's3';
 router.get('/' + sprint +  '/start', async function(req,res) {
+    sprint = 's3';
     let topics =  global.index.data.aggregations.topic.buckets;
     topics = topics.map(function(e) {
         const newTopic = global.topics.find(topic => topic.id == e.key);
         newTopic.count = e.doc_count;
         return newTopic;
     });
-    res.render(sprint + "/start", { sprint: sprint, topics: topics });
+    res.render(sprint + "/start", { sprint: 's3', topics: topics });
 })
 
 
