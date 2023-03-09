@@ -215,6 +215,7 @@ router.get('/' + sprint +  '/start', async function(req,res) {
 sprint = 's4';
 router.get('/' + sprint + '/find', function(req, res) {  
     sprint = 's4';
+    const paginationPerPage = 30;
     let items = global.resources;  
     let searchTerm;
     let appliedFilters = {};
@@ -245,7 +246,7 @@ router.get('/' + sprint + '/find', function(req, res) {
             })
         }
     }
-    const results = s4Search(searchTerm, appliedFilters, page);
+    const results = s4Search(searchTerm, appliedFilters, paginationPerPage, page);
     // console.log(JSON.stringify(results, 0, 2));
     items = results.data.items;
     aggregations = results.data.aggregations;
@@ -266,12 +267,22 @@ router.get('/' + sprint + '/find', function(req, res) {
             selectedCount: helpers.getSelectedFiltersCount(aggregations.issuing_body.buckets)
         }
     ]
-    const count = items.length;
+    console.log(JSON.stringify(req.query, null, 2));
+    const pagination = results.pagination;
+    pagination.from = ((pagination.page -1) * pagination.per_page) +1;
+    pagination.to = pagination.page * pagination.per_page;
+    pagination.to = (pagination.total <= pagination.to) ? pagination.total : pagination.to;
+    pagination.numPages = Math.ceil(pagination.total / pagination.per_page);
+    console.log(JSON.stringify(req.originalUrl, null, 2));
+    pagination.items = helpers.getPaginationItems(pagination, req);
+    pagination.next = helpers.getPaginationNext(pagination, req);
+    pagination.previous = helpers.getPaginationPrev(pagination, req);
+    // console.log(JSON.stringify(pagination, null, 2));
     items = helpers.enrichTopics(items);
-    const clearlinkUrl = req.path + '?q=' + req.query.q;
+    const clearlinkUrl = helpers.getClearFiltersUrl(req);
     const selectedFilters = helpers.getSelectedFilters(filters, req.url, clearlinkUrl);
     req.session.current_url = req.originalUrl;
-    res.render(sprint + "/find", { sprint: sprint, resources: items, selectedFilters: selectedFilters, count: count, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
+    res.render(sprint + "/find", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
 })
 
 
@@ -302,9 +313,9 @@ const searchSetup = function(data) {
 }
 
 
-const s4Search = function(query, filters, page) {
+const s4Search = function(query, filters, perPage, page) {
     const results = itemsjs.search({
-        per_page: 100,
+        per_page: perPage,
         page: page,
         sort: 'name_dsc',
         query: query,
@@ -335,6 +346,57 @@ const helpers = {
         } catch (error) {
             console.log("e", error);
         }
+    },
+    getPaginationItems(pagination, req) {
+        let url = new URL(helpers.getFullUrl(req));
+        let items = [];
+        for (let index = 1; index <= pagination.numPages; index++) {
+            url.searchParams.set('page', index);
+            const item = {
+                "text": index,
+                "href": url.href,
+                "selected": false
+            }
+            if (index == pagination.page) {
+                item.selected = true;
+            }
+            items.push(item);
+        }
+        return items;
+    },
+    getPaginationNext(pagination, req) {
+        // If we're not on the last page, return a next link
+        if(pagination.page != pagination.numPages) {
+            const nextPage = pagination.page + 1;
+            let url = new URL(helpers.getFullUrl(req));
+            url.searchParams.set('page', nextPage);
+            return {
+                text: 'Next',
+                href: url.href
+            }
+        }
+    },
+    getPaginationPrev(pagination, req) {
+        // If we're not on the first page, return a previous link
+        if(pagination.page != 1) {
+            const prevPage = pagination.page - 1;
+            let url = new URL(helpers.getFullUrl(req));
+            url.searchParams.set('page', prevPage);
+            return {
+                text: 'Previous',
+                href: url.href
+            }
+        }
+    },
+    getClearFiltersUrl(req) {
+        let url = new URL(helpers.getFullUrl(req));
+        url.searchParams.set('topicFilters', "_unchecked");
+        url.searchParams.set('organisationFilters', "_unchecked");
+        return url;
+    },
+    getFullUrl(req) {
+        const url = req.protocol + '://' + req.get('host') + req.originalUrl
+        return url;
     },
     mapLiveSchemaToSpec(data, issuing_body, topic) {
         return data.map(function(e) {
