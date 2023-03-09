@@ -348,20 +348,52 @@ const helpers = {
         }
     },
     getPaginationItems(pagination, req) {
+        let manyPages = false;
+        if(pagination.numPages > 6 ) {
+            manyPages = true;
+        }
         let url = new URL(helpers.getFullUrl(req));
         let items = [];
         for (let index = 1; index <= pagination.numPages; index++) {
+            if(manyPages) {
+                switch (index) {
+                    case 1:
+                        break;
+                    case pagination.page:
+                        break;
+                    case pagination.page -1:
+                        break;
+                    case pagination.page +1:
+                        break;
+                    case pagination.numPages:
+                        break;
+                    default:
+                        items.push({
+                            ellipsis: true
+                        })
+                        continue;
+                }
+            }
             url.searchParams.set('page', index);
             const item = {
                 "number": index,
-                "href": url.href,
-                "selected": false
+                "href": url.href
             }
             if (index == pagination.page) {
-                item.selected = true;
+                item.current = true;
             }
             items.push(item);
         }
+        // Remove duplicate adjacent ellipsis
+        items = items.filter((i,index) => {
+            if(index == 0) {
+                return true;
+            }
+            if(!i.ellipsis) {
+                return true;
+            }
+            return items[index-1].ellipsis !== i.ellipsis;
+        });
         return items;
     },
     getPaginationNext(pagination, req) {
