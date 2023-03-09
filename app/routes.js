@@ -353,7 +353,7 @@ const helpers = {
         for (let index = 1; index <= pagination.numPages; index++) {
             url.searchParams.set('page', index);
             const item = {
-                "text": index,
+                "number": index,
                 "href": url.href,
                 "selected": false
             }
