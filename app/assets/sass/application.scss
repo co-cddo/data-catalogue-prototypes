@@ -18,6 +18,13 @@
 .align-items-center {
     align-items: center;
 }
+.moj-pagination__results {
+    text-align: left;
+    display: block;
+}
+.govuk-pagination {
+    margin-bottom: 10px;
+}
 .result-list__item {
     padding: 0 0 15px;
     margin: 0 0 15px!important;
