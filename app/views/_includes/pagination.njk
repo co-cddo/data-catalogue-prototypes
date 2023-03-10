@@ -1,0 +1,17 @@
+
+
+<div class="govuk-!-margin-bottom-3">
+{{ govukPagination({
+  previous: pagination.previous,
+  next: pagination.next,
+  items: pagination.items
+}) }}
+{{ mojPagination({
+  results: {
+    from: pagination.from,
+    to: pagination.to,
+    count: pagination.total,
+    text: 'data resources'
+  }
+}) }}
+</div>
