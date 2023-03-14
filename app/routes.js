@@ -316,10 +316,11 @@ router.get('/' + sprint + '/find-2', function(req, res) {
             })
         }
     }
-    appliedFilters["Good title/description?"] = ['checked'];
+    appliedFilters["Keep?"] = ['checked'];
     const results = s4Search(searchTerm, appliedFilters, paginationPerPage, page);
-    // console.log(JSON.stringify(results, 0, 2));
     items = results.data.items;
+    items = helpers.betterDescriptions(items);
+    // console.log(JSON.stringify(items, 0, 2));
     aggregations = results.data.aggregations;
     
     const filters = [
@@ -373,13 +374,13 @@ const searchSetup = function(data) {
                 size: 30,
                 conjunction: false
             },
-            "Good title/description?": {
-                title: 'Good title/description?',
+            "Keep?": {
+                title: 'Keep?',
                 size: 30,
                 conjunction: false
             }
         },
-        searchableFields: ['title', 'description' ,'issuing_body_readable'],
+        searchableFields: ['title', 'description', 'better description', 'issuing_body_readable'],
     };
     itemsjs = require('itemsjs')(data, configuration);
     return itemsjs.search();
@@ -528,7 +529,16 @@ const helpers = {
             }
             n.url = e.url;
             n.slug = n.title.toLowerCase().replaceAll(' ','-');
-            n["Good title/description?"] = e["Good title/description?"];
+            n["Keep?"] = e["Keep?"];
+            n['better description'] = e['better description'];
+            return n;
+        }
+        )
+    },
+    betterDescriptions(data) {
+        return data.map(function(e) {
+            let n = e;
+            n.description = (e['better description'] === '') ?  e['description']: e['better description'];
             return n;
         }
         )
