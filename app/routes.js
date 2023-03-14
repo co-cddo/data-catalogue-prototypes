@@ -351,7 +351,7 @@ router.get('/' + sprint + '/find-2', function(req, res) {
     const clearlinkUrl = helpers.getClearFiltersUrl(req);
     const selectedFilters = helpers.getSelectedFilters(filters, req.url, clearlinkUrl);
     req.session.current_url = req.originalUrl;
-    res.render(sprint + "/find", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl, thisUrl: req.baseUrl + req.path });
+    res.render(sprint + "/find-2", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl, thisUrl: req.baseUrl + req.path });
 })
 
 

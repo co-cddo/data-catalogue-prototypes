@@ -1,0 +1,89 @@
+{% extends "layouts/main.html" %}
+{%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{%- from "govuk/components/pagination/macro.njk" import govukPagination -%}
+
+{% block pageTitle %}
+  Search results (page {{pagination.page}} of {{pagination.numPages}}) - Find government data prototype Sprint {{ sprint}}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+    Find government data
+</h1>
+<form action="{{ thisUrl }}" method="GET" >
+    <div class="gem-c-search gem-c-search--on-white govuk-!-width-two-thirds govuk-!-margin-bottom-4">
+        <label for="search" class="gem-c-search__label govuk-label">Search the Data Catalogue</label>
+        <div class="gem-c-search__item-wrapper">
+            <input  class="gem-c-search__item gem-c-search__input govuk-input js-class-toggle" id="search" name="q" title="Search" type="search" value="{{ query }}">
+                <div class="gem-c-search__item gem-c-search__submit-wrapper">
+                    <button class="gem-c-search__submit" type="submit" enterkeyhint="search">
+                        Search
+                <svg class="gem-c-search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                </svg>
+                </button> 
+            </div>
+        </div>
+    </div>
+    <div class="moj-filter-layout">
+        <div class="moj-filter-layout__filter">
+            {% include "_includes/filters.njk" %}
+        </div>
+        <div class="moj-filter-layout__content">
+            <p class="govuk-heading-l">{{ count }} results</p>
+            {% if resources|length %}
+                <ul class="govuk-list" data-module="edge">
+                    <li class="result-list__item">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="https://www.figma.com/proto/IgJSC0cviF5CfrUOfW7jRk/CDDO-Data-Catalogue?page-id=32617%3A20971&node-id=32618%3A20977&viewport=-420%2C225%2C0.19&scaling=contain&starting-point-node-id=32618%3A20977&hide-ui=1" target="_blank" class="govuk-link">Stop and Search</a></h2>
+                        <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">
+                            <span class="govuk-visually-hidden">Organisation: </span>Police UK
+                        </p>
+                            <h3 class="govuk-visually-hidden">Topics:</h3>
+                            <p class="govuk-!-display-inline">
+                                {{ govukTag({
+                                    text: "Crime and justice",
+                                    classes: "govuk-tag--grey"
+                                }) }}
+                            </p>
+                        <div class="govuk-!-margin-bottom-0 govuk-!-margin-top-1">
+                            Access data on individual stop and search records, including date and time, street-level location, ethnicity, gender and age of the person stopped, the police force involved and the outcome.
+                        </div>
+                    </li>
+                    {% for resource in resources %}
+                    <li class="result-list__item">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="./resources/{{ resource.slug | urlencode }}" class="govuk-link">{{ resource.title}}</a></h2>
+                        <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">
+                            <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
+                        </p>
+                        {% if resource.topic|length %}
+                            <h3 class="govuk-visually-hidden">Topics:</h3>
+                            {% include "_includes/topics.njk" %}
+                        {% endif %}
+                        <div class="govuk-!-margin-bottom-0 govuk-!-margin-top-1">
+                            {{ resource.description |  replace("\\n\\n", "\n") | govukMarkdown | safe }}
+                        </div>
+                    </li>
+                    {% endfor %}
+                    </ul>
+                    {% include "_includes/pagination.njk" %}
+                
+            {% else %}
+            <div class="no-results govuk-!-font-size-19"> 
+                <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
+                 <p class="govuk-body">Improve your search results by:</p> 
+                 <ul class="govuk-list govuk-list--bullet"> 
+                    <li>removing filters</li> 
+                    <li>double-checking your spelling</li> 
+                    <li>using fewer keywords</li> 
+                    <li>searching for something less specific</li> 
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+{% endblock %}
