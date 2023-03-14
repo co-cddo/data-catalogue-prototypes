@@ -7,7 +7,7 @@
     {% for filter in filters %}
             <div class="app-c-expander" data-module="expander" data-open-on-load="{% if filter.expanded === 'true' %}true{% else %}false{% endif %}">
                 <h2 class="app-c-expander__heading">
-                <button class="app-c-expander__button js-button" aria-expanded="{% if filter.expanded === 'true' %}true{% else %}false{% endif %}"
+                <button type="button" class="app-c-expander__button js-button" aria-expanded="{% if filter.expanded === 'true' %}true{% else %}false{% endif %}"
                     aria-controls="expander-content-{{ filter.id }}">{{ filter.title }}</button>
                 <div class="app-c-option-select__selected-counter js-selected-counter">{{ filter.selectedCount }} selected</div>
                 <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"

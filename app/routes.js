@@ -24,8 +24,6 @@ const init =  async function() {
    global.resources =  await global.resources.concat(mappedNhs, mappedCatalogue);
 
    global.index = searchSetup(global.resources);
-    //    console.log(JSON.stringify(resources, 0, 2));
-    //    console.log(JSON.stringify(global.index.data.items, 0, 2));
 }
 
 // SPRINT 1 ROUTES
@@ -282,7 +280,78 @@ router.get('/' + sprint + '/find', function(req, res) {
     const clearlinkUrl = helpers.getClearFiltersUrl(req);
     const selectedFilters = helpers.getSelectedFilters(filters, req.url, clearlinkUrl);
     req.session.current_url = req.originalUrl;
-    res.render(sprint + "/find", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl });
+    res.render(sprint + "/find", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl, thisUrl: req.baseUrl + req.path });
+})
+
+router.get('/' + sprint + '/find-2', function(req, res) {  
+    sprint = 's4';
+    const paginationPerPage = 30;
+    let items = global.resources;  
+    let searchTerm;
+    let appliedFilters = {};
+    let aggregations = global.index.data.aggregations;
+    let anyFiltersActive = false;
+    let page = '1';
+    if (Object.keys(req.query).length !== 0) {
+        if(req.query.q) {
+            searchTerm = req.query.q;
+        }
+        page = (typeof req.query.page === 'undefined') ? '1' : req.query.page;
+        if(Array.isArray(req.query.organisationFilters)) {
+            anyFiltersActive = true;
+            appliedFilters.issuing_body = req.query.organisationFilters.filter(function(e) {
+                if(e == '_unchecked' || e == req.query.removeFilter) {
+                    return false;
+                }
+                return true;
+            })
+        }
+        if(Array.isArray(req.query.topicFilters)) {
+            appliedFilters.topic = req.query.topicFilters.filter(function(e) {
+                anyFiltersActive = true;
+                if(e == '_unchecked' || e == req.query.removeFilter) {
+                    return false;
+                }
+                return true;
+            })
+        }
+    }
+    appliedFilters["Keep?"] = ['checked'];
+    const results = s4Search(searchTerm, appliedFilters, paginationPerPage, page);
+    items = results.data.items;
+    items = helpers.betterDescriptions(items);
+    // console.log(JSON.stringify(items, 0, 2));
+    aggregations = results.data.aggregations;
+    
+    const filters = [
+        {
+            title: 'Topics',
+            id: 'topicFilters',
+            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.topic.buckets)
+        },
+        {
+            title: 'Organisations',
+            id: 'organisationFilters',
+            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.issuing_body.buckets)
+        }
+    ]
+    const pagination = results.pagination;
+    pagination.from = ((pagination.page -1) * pagination.per_page) +1;
+    pagination.to = pagination.page * pagination.per_page;
+    pagination.to = (pagination.total <= pagination.to) ? pagination.total : pagination.to;
+    pagination.numPages = Math.ceil(pagination.total / pagination.per_page);
+    pagination.items = helpers.getPaginationItems(pagination, req);
+    pagination.next = helpers.getPaginationNext(pagination, req);
+    pagination.previous = helpers.getPaginationPrev(pagination, req);
+    items = helpers.enrichTopics(items);
+    const clearlinkUrl = helpers.getClearFiltersUrl(req);
+    const selectedFilters = helpers.getSelectedFilters(filters, req.url, clearlinkUrl);
+    req.session.current_url = req.originalUrl;
+    res.render(sprint + "/find-2", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl, thisUrl: req.baseUrl + req.path });
 })
 
 
@@ -305,8 +374,13 @@ const searchSetup = function(data) {
                 size: 30,
                 conjunction: false
             },
+            "Keep?": {
+                title: 'Keep?',
+                size: 30,
+                conjunction: false
+            }
         },
-        searchableFields: ['title', 'description' ,'issuing_body_readable'],
+        searchableFields: ['title', 'description', 'better description', 'issuing_body_readable'],
     };
     itemsjs = require('itemsjs')(data, configuration);
     return itemsjs.search();
@@ -455,6 +529,16 @@ const helpers = {
             }
             n.url = e.url;
             n.slug = n.title.toLowerCase().replaceAll(' ','-');
+            n["Keep?"] = e["Keep?"];
+            n['better description'] = e['better description'];
+            return n;
+        }
+        )
+    },
+    betterDescriptions(data) {
+        return data.map(function(e) {
+            let n = e;
+            n.description = (e['better description'] === '') ?  e['description']: e['better description'];
             return n;
         }
         )
