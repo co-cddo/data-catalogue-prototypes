@@ -30,6 +30,17 @@
     margin: 0 0 15px!important;
     border-bottom: 1px solid #b1b4b6;
 }
+.result-list__limit-height {
+    max-height: 1.3157894737em * 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.result-list__limit-height.theres-no-limit {
+    max-height: fit-content;
+}
+.js-enabled .govuk-accordion__section-toggle {
+    cursor: pointer;
+}
 .datacat-color-white {
     color: white !important;
 }
