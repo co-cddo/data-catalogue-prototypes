@@ -9,6 +9,16 @@ window.GOVUKPrototypeKit.documentReady(() => {
   $searchItem.on('change', function() {
     toggleFocus(this);
   });
+  
+  var checkboxes = document.querySelectorAll("#searchForm input[type='checkbox']");
+  var button = document.querySelector(".moj-filter__options button");
+  
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", function() {
+      button.click();
+    });
+  }
+
 })
 
 function toggleFocus(elem) {
@@ -23,3 +33,6 @@ function toggleFocus(elem) {
 function hasValue(elem) {
     return $(elem).filter(function() { return $(this).val(); }).length > 0;
 }
+
+
+

@@ -14,5 +14,9 @@ window.GOVUKPrototypeKit.documentReady(() => {
         $(this).attr('aria-expanded', toggleValue);
         $(this).find('.govuk-accordion__section-toggle-text').text(text);
         $(this).parent('.result-list__item').find('.result-list__limit-height').toggleClass('theres-no-limit');
+        $(this).parent('.gem-c-document-list__item').find('.result-list__limit-height').toggleClass('theres-no-limit');
+        $(this).parent('.govuk-grid-column-two-thirds-from-desktop').find('.result-list__limit-height').toggleClass('theres-no-limit');
+        
+        
     })
 });

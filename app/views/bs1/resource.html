@@ -1,0 +1,242 @@
+{% extends "layouts/main.html" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+  {{ resource.title }} - Sprint 1
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+      <ul class="app-navigation__list app-width-container">
+          <li class="app-navigation__list-item  app-navigation__list-item--current">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/get-started/">
+              Find data
+            </a>
+          </li>
+          <li class="app-navigation__list-item ">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/styles/">
+              Manage Data
+            </a>
+          </li>
+          <li class="app-navigation__list-item ">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/components/">
+              Publish Data
+            </a>
+          </li>
+          <li class="app-navigation__list-item ">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/patterns/">
+              Learn
+            </a>
+          </li>
+          <li class="app-navigation__list-item ">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/community/">
+              Contact
+            </a>
+          </li>
+          <li class="app-navigation__list-item app-navigation__list-item--right">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start">
+              Sign out
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-4">
+    <p class="govuk-caption-xl">
+      {{ resource.issuing_body_readable }}
+    </p>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
+        {{ resource.title }}
+    </h1>
+    <p class="govuk-caption-m"> Last updated: <strong>03 February 2022</strong></p>
+    <div class="result-list__limit-height">
+      <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
+        {{ resource.description | replace("\\n\\n", "\n\n") | govukMarkdown | safe  }}
+    </p>
+    </div>
+    <span class="js-result-list-toggle-height govuk-accordion__section-toggle govuk-body" data-nosnippet=""><span class="govuk-accordion__section-toggle-focus"><span class="govuk-accordion-nav__chevron govuk-accordion-nav__chevron--down"></span><span class="govuk-accordion__section-toggle-text">Show more</span></span></span>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-8">
+    <h2 class="govuk-heading-l" style="border-top: 1px solid #b1b4b6; padding-top: 15px;">Get this data</h2>
+
+    <div class="govuk-warning-text govuk-!-margin-bottom-0">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        Important
+      </strong>
+    </div>
+    
+    <p class="govuk-body">This data contains sensitive information (such as personal details) and requires a data share agreement with {{ resource.issuing_body_readable }}.</p>
+    {{ govukButton({
+      text: "Start a data share",
+      href: '#'
+    }) }}
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          What information will I need?
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        You will be asked questions in the following categories:
+        <ul>
+          <li>Purpose of the data share</li>
+          <li>Legal powers & gatway</li>
+          <li>Data protection</li>
+          <li>Data governance, security & technology</li>
+        </ul>
+
+        You can see ther <a href="#">list of questions</a> before you start. To answer these questions you may require support from people with skills in:
+
+        <ul>
+          <li>technology</li>
+          <li>data security</li>
+          <li>Data protection</li>
+          <li>Legal</li>
+          <li>Data governance</li>
+        </ul>
+
+
+      </div>
+    </details>
+
+    <h2 class="govuk-heading-l" style="border-top: 1px solid #b1b4b6; padding-top: 30px;">Data included</h2>
+    <p class="govuk-body">The following files are available as part of this dataset. </p>
+
+    {% from "govuk/components/table/macro.njk" import govukTable %}
+
+{{ govukTable({
+  firstCellIsHeader: true,
+  head: [
+    {
+      text: "File"
+    },
+    {
+      text: "Format"
+    },
+    {
+      text: "Date added"
+    }
+  ],
+  rows: [
+    [
+      {
+        text: "Data from 2022/2023"
+      },
+      {
+        text: "20 January 2023"
+      },
+      {
+        text: "CSV"
+      }
+    ],
+    [
+      {
+        text: "Data from 2021/2022"
+      },
+      {
+        text: "04 February 2022"
+      },
+      {
+        text: "CSV"
+      }
+    ],
+    [
+      {
+        text: "supporting data"
+      },
+      {
+        text: "03 March 2022"
+      },
+      {
+        text: "PDF"
+      }
+    ]
+  ]
+}) }}
+<h2 class="govuk-heading-l">Technical information</h2>
+    <div class="additional-info">
+    
+    {% if resource.url %}
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">API</h3>
+      <p>This API is in production, but is under review for depreciation.</p>
+      <p>{{ resource.url | govukMarkdown | safe }}</p>
+      {% endif %}
+
+      {% if resource.license %}
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">License</h3>
+      <p>{{ resource.license | govukMarkdown | safe }}</p>
+      {% endif %}
+
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Access rights</h3>
+      <p>Internal</p>
+
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Security classification</h3>
+      <p>Official</p>
+
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Version</h3>
+      <p>1.2</p>
+
+      {% if resource.documentation %}
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Documentation</h3>
+      <p>{{ resource.documentation | govukMarkdown | safe }}</p>
+      {% endif %}
+
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Contact</h3>
+      <p>{{ resource.contact | govukMarkdown | safe }}</p>
+
+
+
+      <!-- <h2>Raw data for debugging</h2>
+      <code>
+          {{ resource | dump}}
+      </code> -->
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third-from-desktop govuk-!-margin-bottom-8">
+    <div class="gem-c-contextual-sidebar">
+
+      <div class="gem-c-related-navigation">
+      <h2 id="related-nav-related_items-ae81accd" class="gem-c-related-navigation__main-heading" >
+        Related Data
+      </h2>
+      <nav role="navigation" class="gem-c-related-navigation__nav-section" aria-labelledby="related-nav-related_items-ae81accd">
+        <ul class="gem-c-related-navigation__link-list">
+          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="#">Data related to this</a></li>
+          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="#">Something else that is related</a></li>
+          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="#">Another thing that is relevant</a></li>
+        </ul>
+      </nav>
+
+</div>
+
+
+</div>
+  </div>
+</div>
+
+{% endblock %}
+
