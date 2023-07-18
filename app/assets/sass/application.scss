@@ -655,5 +655,24 @@ li.app-navigation__list-item.app-navigation__list-item--right {
     margin-right: -15px;
 }
 
+.moj-override .app-c-option-select__container {
+    position: relative;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #fff;
+}
 
+@media (min-width: 48.0625em) {
+    .moj-override .app-c-option-select__container::-webkit-scrollbar {
+        -webkit-appearance:none;
+        width: 7px
+    }
+
+    .moj-override .app-c-option-select__container::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,0.87)
+    }
+}
 

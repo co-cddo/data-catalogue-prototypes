@@ -15,33 +15,13 @@
       <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
       <ul class="app-navigation__list app-width-container">
           <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/get-started/">
-              Find data
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/styles/">
-              Manage Data
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/components/">
-              Publish Data
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/patterns/">
-              Learn
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/community/">
-              Contact
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start">
+              Home
             </a>
           </li>
           <li class="app-navigation__list-item app-navigation__list-item--right">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/community/">
-              Log in
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/login2">
+              Sign in
             </a>
           </li>
       </ul>
@@ -64,12 +44,12 @@
 {% block content %}
 
 <h1 class="govuk-heading-xl">
-  Log in
+  Sign in
 </h1>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <p>You need to log in as the data available is personal, sensitive or  special category.</p>
+      <p>You need to sign in as the data available is personal, sensitive or  special category.</p>
 
       {% from "govuk/components/input/macro.njk" import govukInput %}
       {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -102,12 +82,12 @@
         }) }}
   
         {{ govukButton({
-          text: "Log in"
+          text: "Sign in"
         }) }}
       </form>
 
       <h2 class="govuk-heading-m">New users of Data Marketplace</h2>
-      <div class="govuk-body"><a class="govuk-link" id="no-account" href="#">Create Log in details</a>
+      <div class="govuk-body"><a class="govuk-link" id="no-account" href="#">Create sign in details</a>
       </div>
       <h2 class="govuk-heading-m">Problems signing in</h2>
       <ul class="govuk-list">
@@ -127,12 +107,12 @@
           <ul class="govuk-list govuk-!-font-size-16">
             <li>
               <a href="#">
-                Marketplace knowledge hub
+                Knowledge Hub
               </a>
             </li>
             <li>
               <a href="#">
-                Contact the team
+                Contact Data Marketplace Team
               </a>
             </li>
           </ul>

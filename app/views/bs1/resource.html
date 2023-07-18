@@ -66,7 +66,20 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
         {{ resource.title }}
     </h1>
+    
     <p class="govuk-caption-m"> Last updated: <strong>03 February 2022</strong></p>
+
+    <p class="govuk-!-margin-bottom-5">
+      {% if resource.type == "dataset" %}
+      <span class="">Dataset:</span>
+      {% elseif resource.type == "dataservice" %}
+      <span class="">Data service:</span>
+      {% endif %}
+
+      {% for distribution in resource.distributions %}
+          <strong class="govuk-tag govuk-tag--grey">{{ distribution }}</strong>
+      {% endfor %}
+    </p>
     <div class="result-list__limit-height">
       <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-margin-top-0" >
         {{ resource.description | replace("\\n\\n", "\n\n") | govukMarkdown | safe  }}
@@ -78,21 +91,25 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-8">
-    <h2 class="govuk-heading-l" style="border-top: 1px solid #b1b4b6; padding-top: 15px;">Get this data</h2>
+    <div class="additional-info govuk-!-margin-bottom-8">
+    {% if resource.type == "dataset" %}
+    <h2 class="govuk-heading-l">Request this dataset</h2>
+    {% elseif resource.type == "dataservice" %}
+    <h2 class="govuk-heading-l">Request this data service</h2>
+    {% endif %}
+    
 
-    <div class="govuk-warning-text govuk-!-margin-bottom-0">
+    <!-- <div class="govuk-warning-text govuk-!-margin-bottom-0">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
         Important
       </strong>
-    </div>
+    </div> -->
     
     <p class="govuk-body">This data contains sensitive information (such as personal details) and requires a data share agreement with {{ resource.issuing_body_readable }}.</p>
-    {{ govukButton({
-      text: "Start a data share",
-      href: '#'
-    }) }}
+    <p class="govuk-body">You need to answer some questions to make sure your request meets GPDR and data sharing standards.</p>
+    <p class="govuk-body">Your answers will be reviewed by the department that owns the data."</p>
 
     <details class="govuk-details" data-module="govuk-details">
       <summary class="govuk-details__summary">
@@ -108,7 +125,16 @@
           <li>Data protection</li>
           <li>Data governance, security & technology</li>
         </ul>
+      </div>
+    </details>
 
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Before you start
+        </span>
+      </summary>
+      <div class="govuk-details__text">
         You can see ther <a href="#">list of questions</a> before you start. To answer these questions you may require support from people with skills in:
 
         <ul>
@@ -118,94 +144,85 @@
           <li>Legal</li>
           <li>Data governance</li>
         </ul>
-
-
       </div>
     </details>
+    {{ govukButton({
+      text: "Start a data share request",
+      href: '#'
+    }) }}
+    <p class="govuk-body">
+      <a href="#" class="govuk-link">Get more help</a>
+    </p>
+  </div>
 
-    <h2 class="govuk-heading-l" style="border-top: 1px solid #b1b4b6; padding-top: 30px;">Data included</h2>
+    {% if resource.type == "dataset" %}
+
+    <h2 class="govuk-heading-l">Data included</h2>
     <p class="govuk-body">The following files are available as part of this dataset. </p>
 
-    {% from "govuk/components/table/macro.njk" import govukTable %}
+    <table class="govuk-table govuk-!-margin-bottom-8">
+  
+  
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+        
+          <th scope="col" class="govuk-table__header">File</th>
+        
+          <th scope="col" class="govuk-table__header">Date added</th>
+        
+          <th scope="col" class="govuk-table__header">File format</th>
+        
+        </tr>
+      </thead>
+      
+      <tbody class="govuk-table__body">
+        {% for distribution in resource.distributions %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">{{ resource.slug }}-{{ loop.index0 + 1 }}</th>
+              <td class="govuk-table__cell">{{resource.dateUpdated}}</td>
+              <td class="govuk-table__cell">{{ distribution }}</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-{{ govukTable({
-  firstCellIsHeader: true,
-  head: [
-    {
-      text: "File"
-    },
-    {
-      text: "Format"
-    },
-    {
-      text: "Date added"
-    }
-  ],
-  rows: [
-    [
-      {
-        text: "Data from 2022/2023"
-      },
-      {
-        text: "20 January 2023"
-      },
-      {
-        text: "CSV"
-      }
-    ],
-    [
-      {
-        text: "Data from 2021/2022"
-      },
-      {
-        text: "04 February 2022"
-      },
-      {
-        text: "CSV"
-      }
-    ],
-    [
-      {
-        text: "supporting data"
-      },
-      {
-        text: "03 March 2022"
-      },
-      {
-        text: "PDF"
-      }
-    ]
-  ]
-}) }}
+    {% endif %}
 <h2 class="govuk-heading-l">Technical information</h2>
-    <div class="additional-info">
     
-    {% if resource.url %}
+    
+    {% if resource.type == "dataservice" %}
       <h3 class="govuk-heading-m govuk-!-margin-bottom-2">API</h3>
       <p>This API is in production, but is under review for depreciation.</p>
       <p>{{ resource.url | govukMarkdown | safe }}</p>
-      {% endif %}
+    {% endif %}
 
-      {% if resource.license %}
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">License</h3>
+    {% if resource.license %}
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">License</h3>
       <p>{{ resource.license | govukMarkdown | safe }}</p>
-      {% endif %}
+    {% endif %}
 
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Access rights</h3>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Access rights</h3>
       <p>Internal</p>
 
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Security classification</h3>
-      <p>Official</p>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Created</h3>
+      <p>04 November 2019</p>
 
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Version</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Updated</h3>
+      <p>23 November 2019</p>
+
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Catalogue Record</h3>
+      <p>Added to Data Marketplace: 18 May 2020</p>
+      <p>Updated on Data Marketplace: 01 February 2020</p>
+
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Version</h3>
       <p>1.2</p>
 
       {% if resource.documentation %}
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Documentation</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Documentation</h3>
       <p>{{ resource.documentation | govukMarkdown | safe }}</p>
       {% endif %}
 
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Contact</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Contact</h3>
       <p>{{ resource.contact | govukMarkdown | safe }}</p>
 
 
@@ -214,7 +231,7 @@
       <code>
           {{ resource | dump}}
       </code> -->
-    </div>
+    
   </div>
   <div class="govuk-grid-column-one-third-from-desktop govuk-!-margin-bottom-8">
     <div class="gem-c-contextual-sidebar">
@@ -225,9 +242,9 @@
       </h2>
       <nav role="navigation" class="gem-c-related-navigation__nav-section" aria-labelledby="related-nav-related_items-ae81accd">
         <ul class="gem-c-related-navigation__link-list">
-          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="#">Data related to this</a></li>
-          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="#">Something else that is related</a></li>
-          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="#">Another thing that is relevant</a></li>
+          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="/bs1/resources/citizen-relationships">Citizen Relationships</a></li>
+          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href="/bs1/resources/contact-details-verification">Contact Details Verification</a></li>
+          <li class="gem-c-related-navigation__link"><a class="govuk-link govuk-link gem-c-related-navigation__section-link govuk-link gem-c-related-navigation__section-link--sidebar  govuk-link gem-c-related-navigation__section-link--other" href=" /bs1/resources/gov.uk-content">GOV.UK Content</a></li>
         </ul>
       </nav>
 

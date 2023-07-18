@@ -1,0 +1,12 @@
+[
+    {
+      "id": "dataset",
+      "name": "Dataset",
+      "description": ""
+    },
+    {
+      "id": "dataservice",
+      "name": "Data service",
+      "description": ""
+    }
+  ]

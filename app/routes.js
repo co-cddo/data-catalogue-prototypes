@@ -16,6 +16,7 @@ let global = {};
 const init =  async function() {
    global.organisations = await helpers.getData('./app/data/organisations.json');
    global.topics = await helpers.getData('./app/data/topics.json');
+   global.types = await helpers.getData('./app/data/asset-types.json');
    global.resources = [];
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
@@ -490,6 +491,13 @@ router.get('/' + sprint + '/find', function(req, res) {
             items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
             expanded: 'true',
             selectedCount: helpers.getSelectedFiltersCount(aggregations.issuing_body.buckets)
+        },
+        {
+            title: 'Asset Types',
+            id: 'typesFilters',
+            items: helpers.generateFilterItems(global.types, 'id', 'name', 'typesFilters', aggregations.type),
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.type.buckets)
         }
     ]
     console.log(JSON.stringify(req.query, null, 2));
@@ -538,6 +546,11 @@ const searchSetup = function(data) {
             },
             issuing_body: {
                 title: 'Organisations',
+                size: 30,
+                conjunction: false
+            },
+            type: {
+                title: 'Asset Type',
                 size: 30,
                 conjunction: false
             },
@@ -665,13 +678,14 @@ const helpers = {
         let url = new URL(helpers.getFullUrl(req));
         url.searchParams.set('topicFilters', "_unchecked");
         url.searchParams.set('organisationFilters', "_unchecked");
+        url.searchParams.set('typeFilters', "_unchecked");
         return url;
     },
     getFullUrl(req) {
         const url = req.protocol + '://' + req.get('host') + req.originalUrl
         return url;
     },
-    mapLiveSchemaToSpec(data, issuing_body, topic) {
+    mapLiveSchemaToSpec(data, issuing_body, topic, type) {
         return data.map(function(e) {
             let n = {};
             if(e.data) {
@@ -682,6 +696,9 @@ const helpers = {
                 n.topic = helpers.splitTopics(topic);
                 n.contact = e.data.contact;
                 n.documentation = e.data['documentation-url'];
+                n.distributions = e.data.distributions;
+                n.dateUpdated = e.data.dateUpdated;
+                n.type = e.data.type;
             }
             else {
                 n.title = e.name;
@@ -690,14 +707,20 @@ const helpers = {
                 n.issuing_body_readable = helpers.getOrgTitle(e.provider);
                 n.contact = e.maintainer;
                 n.documentation = e.documentation;
+                n.distributions = e.distributions;
+                n.dateUpdated = e.dateUpdated;
+                n.dateUpdated = helpers.formatDate(n.dateUpdated);
                 if(e.topic) {
                     n.topic = helpers.splitTopics(e.topic);
                 }
+                n.type = e.type;
+                
             }
             n.url = e.url;
             n.slug = n.title.toLowerCase().replaceAll(' ','-');
             n["Keep?"] = e["Keep?"];
             n['better description'] = e['better description'];
+            // const distList = n.distributions.split(',');
             return n;
         }
         )
@@ -724,6 +747,26 @@ const helpers = {
             }
             return "";
         });
+    },
+    formatDate(inputDate) {
+        // Validate the input date format ("yyyy-mm-dd")
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(inputDate)) {
+            console.log(inputDate);
+            throw new Error("Invalid date format. Expected format: yyyy-mm-dd");
+        }
+
+        // Parse the input date into a JavaScript Date object
+        const dateObject = new Date(inputDate);
+
+        // Format the date using Intl.DateTimeFormat
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        }).format(dateObject);
+
+        return formattedDate;
     },
     enrichTopics(resources) {
         resources.forEach(function(resource, index) {
