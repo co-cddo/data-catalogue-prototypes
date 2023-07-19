@@ -12,41 +12,21 @@
   serviceUrl: "/",
   containerClasses: "govuk-width-container"
 }) }}
-    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
-      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
-      <ul class="app-navigation__list app-width-container">
-          <li class="app-navigation__list-item  app-navigation__list-item--current">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/get-started/">
-              Find data
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/styles/">
-              Manage Data
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/components/">
-              Publish Data
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/patterns/">
-              Learn
-            </a>
-          </li>
-          <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/community/">
-              Contact
-            </a>
-          </li>
-          <li class="app-navigation__list-item app-navigation__list-item--right">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start">
-              Sign out
-            </a>
-          </li>
-      </ul>
-    </nav>
+<nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+  <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+  <ul class="app-navigation__list app-width-container">
+    <li class="app-navigation__list-item ">
+        <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start-logged-in">
+          Home
+        </a>
+      </li>
+      <li class="app-navigation__list-item app-navigation__list-item--right">
+        <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start">
+          Sign out
+        </a>
+      </li>
+  </ul>
+</nav>
 
 {% endblock %}
 
@@ -71,9 +51,9 @@
 
     <p class="govuk-!-margin-bottom-5">
       {% if resource.type == "dataset" %}
-      <span class="">Dataset:</span>
+      <span class="">Dataset | Filetypes:</span>
       {% elseif resource.type == "dataservice" %}
-      <span class="">Data service:</span>
+      <span class="">Data service | APIs: </span>
       {% endif %}
 
       {% for distribution in resource.distributions %}
@@ -212,7 +192,7 @@
 
       <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Catalogue Record</h3>
       <p>Added to Data Marketplace: 18 May 2020</p>
-      <p>Updated on Data Marketplace: 01 February 2020</p>
+      <p>Updated on Data Marketplace: 01 june 2020</p>
 
       <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Version</h3>
       <p>1.2</p>
