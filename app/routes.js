@@ -22,7 +22,7 @@ const init =  async function() {
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
    const mappedNhs = await helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
-   global.resources =  await global.resources.concat(mappedNhs, mappedCatalogue);
+   global.resources =  await global.resources.concat(mappedCatalogue);
 
    global.index = searchSetup(global.resources);
 }
@@ -534,8 +534,8 @@ const searchSetup = function(data) {
     const configuration = {
         sortings: {
             name_dsc: {
-            field: 'title',
-            order: 'dsc'
+            field: 'dateUpdatedOrig',
+            order: 'desc'
             }
         },
         aggregations: {
@@ -709,6 +709,7 @@ const helpers = {
                 n.documentation = e.documentation;
                 n.distributions = e.distributions;
                 n.dateUpdated = e.dateUpdated;
+                n.dateUpdatedOrig = helpers.trueDate(n.dateUpdated);
                 n.dateUpdated = helpers.formatDate(n.dateUpdated);
                 if(e.topic) {
                     n.topic = helpers.splitTopics(e.topic);
@@ -767,6 +768,16 @@ const helpers = {
         }).format(dateObject);
 
         return formattedDate;
+    },
+    trueDate(inputDate) {
+        function convertToDateObject(dateString) {
+            const [year, month, day] = dateString.split('-').map(Number);
+            return new Date(year, month - 1, day);
+            }
+        const dateStr = inputDate;
+        const dateObj = convertToDateObject(dateStr);
+
+        return dateObj;
     },
     enrichTopics(resources) {
         resources.forEach(function(resource, index) {

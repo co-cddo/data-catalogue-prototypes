@@ -47,7 +47,7 @@
         {{ resource.title }}
     </h1>
     
-    <p class="govuk-caption-m"> Last updated: <strong>03 February 2022</strong></p>
+    <p class="govuk-caption-m"> Last updated: <strong>{{ resource.dateUpdated }}</strong></p>
 
     <p class="govuk-!-margin-bottom-5">
       {% if resource.type == "dataset" %}
@@ -88,25 +88,8 @@
     </div> -->
     
     <p class="govuk-body">This data contains sensitive information (such as personal details) and requires a data share agreement with {{ resource.issuing_body_readable }}.</p>
-    <p class="govuk-body">You need to answer some questions to make sure your request meets GPDR and data sharing standards.</p>
-    <p class="govuk-body">Your answers will be reviewed by the department that owns the data."</p>
-
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          What information will I need?
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        You will be asked questions in the following categories:
-        <ul>
-          <li>Purpose of the data share</li>
-          <li>Legal powers & gatway</li>
-          <li>Data protection</li>
-          <li>Data governance, security & technology</li>
-        </ul>
-      </div>
-    </details>
+    <p class="govuk-body">You need to answer some questions to make sure your request meets GPDR and data sharing standards. You can see the <a href="#">list of questions <span class="govuk-visually-hidden">Used to evaluate a share request</span></a> before you start.</p>
+    <p class="govuk-body">Your answers will be reviewed by the department that owns the data.</p>
 
     <details class="govuk-details" data-module="govuk-details">
       <summary class="govuk-details__summary">
@@ -115,11 +98,11 @@
         </span>
       </summary>
       <div class="govuk-details__text">
-        You can see ther <a href="#">list of questions</a> before you start. To answer these questions you may require support from people with skills in:
+        To answer these questions you may require support from people with skills in:
 
         <ul>
-          <li>technology</li>
-          <li>data security</li>
+          <li>Technology</li>
+          <li>Data security</li>
           <li>Data protection</li>
           <li>Legal</li>
           <li>Data governance</li>
@@ -137,7 +120,7 @@
 
     {% if resource.type == "dataset" %}
 
-    <h2 class="govuk-heading-l">Data included</h2>
+    <h2 class="govuk-heading-l">Data available</h2>
     <p class="govuk-body">The following files are available as part of this dataset. </p>
 
     <table class="govuk-table govuk-!-margin-bottom-8">
@@ -165,47 +148,87 @@
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <h2 class="govuk-heading-l">Data available</h2>
+    <p class="govuk-body">The API information is available for this data service.</p>
 
+    <table class="govuk-table govuk-!-margin-bottom-8">
+      
+      <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Service type</th>
+              <td class="govuk-table__cell">{{ resource.distributions }}</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Service Status</th>
+              <td class="govuk-table__cell">In production</td>
+            </tr>
+            {% if resource.url %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Endpoint URL (o)</th>
+              <td class="govuk-table__cell">{{ resource.url | govukMarkdown | safe }}</td>
+            </tr>
+            {% endif %}
+            
+      </tbody>
+    </table>
     {% endif %}
-<h2 class="govuk-heading-l">Technical information</h2>
+
+    <h2 class="govuk-heading-l">Further information</h2>
     
-    
-    {% if resource.type == "dataservice" %}
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">API</h3>
-      <p>This API is in production, but is under review for depreciation.</p>
-      <p>{{ resource.url | govukMarkdown | safe }}</p>
-    {% endif %}
-
-    {% if resource.license %}
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">License</h3>
-      <p>{{ resource.license | govukMarkdown | safe }}</p>
-    {% endif %}
-
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Access rights</h3>
-      <p>Internal</p>
-
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Created</h3>
-      <p>04 November 2019</p>
-
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Updated</h3>
-      <p>23 November 2019</p>
-
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Catalogue Record</h3>
-      <p>Added to Data Marketplace: 18 May 2020</p>
-      <p>Updated on Data Marketplace: 01 june 2020</p>
-
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Version</h3>
-      <p>1.2</p>
-
-      {% if resource.documentation %}
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Documentation</h3>
-      <p>{{ resource.documentation | govukMarkdown | safe }}</p>
-      {% endif %}
-
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Contact</h3>
-      <p>{{ resource.contact | govukMarkdown | safe }}</p>
-
-
+    <table class="govuk-table govuk-!-margin-bottom-8">
+      
+      <tbody class="govuk-table__body">
+              {% if resource.license %}
+              <h3 class="govuk-heading-s govuk-!-margin-bottom-1">License</h3>
+              <p>{{ resource.license | govukMarkdown | safe }}</p>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header  govuk-!-width-one-half">License</th>
+                <td class="govuk-table__cell  govuk-!-width-one-half">{{ resource.license | govukMarkdown | safe }}</td>
+              </tr>
+            {% endif %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header  govuk-!-width-one-half">Access rights</th>
+              <td class="govuk-table__cell  govuk-!-width-one-half">Internal</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Security Classification</th>
+              <td class="govuk-table__cell govuk-!-width-one-half">Official</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Created</th>
+              <td class="govuk-table__cell govuk-!-width-one-half">04 November 2019</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Updated</th>
+              <td class="govuk-table__cell govuk-!-width-one-half">23 November 2019</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Added to Data Marketplace</th>
+              <td class="govuk-table__cell govuk-!-width-one-half">18 May 2020</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Updated on Data Marketplace</th>
+              <td class="govuk-table__cell govuk-!-width-one-half">01 june 2020</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Version</th>
+              <td class="govuk-table__cell govuk-!-width-one-half">1.2</td>
+            </tr>
+            {% if resource.documentation %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Documentation</th>
+              <td class="govuk-table__cell">{{ resource.documentation | govukMarkdown | safe }}</td>
+            </tr>
+            {% endif %}
+            {% if resource.contact %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Contact</th>
+              <td class="govuk-table__cell">{{ resource.contact | govukMarkdown | safe }}</td>
+            </tr>
+            {% endif %}
+      </tbody>
+    </table>
 
       <!-- <h2>Raw data for debugging</h2>
       <code>
