@@ -15,12 +15,13 @@
       <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
       <ul class="app-navigation__list app-width-container">
           <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/start">
               Home
             </a>
           </li>
+          </li>
           <li class="app-navigation__list-item app-navigation__list-item--right">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/login2">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/login2">
               Sign in
             </a>
           </li>
@@ -54,7 +55,7 @@
       {% from "govuk/components/input/macro.njk" import govukInput %}
       {% from "govuk/components/button/macro.njk" import govukButton %}
 
-      <form action="/bs1/start-logged-in" method="post" novalidate>
+      <form action="/bs2/find" method="post" novalidate>
         {{ govukInput({
           label: {
             text: "Email address",

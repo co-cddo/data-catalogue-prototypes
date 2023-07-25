@@ -437,10 +437,15 @@ router.get('/' + sprint + '/find-2', function(req, res) {
 // BETA SPRINTS 
 
 // BETA SPRINT 1 ROUTES
-// A search results page that handles long descriptions gracefully
+// Adding a landing page for all services
 sprint = 'bs1';
+
+
+// BETA SPRINT 2 ROUTES
+// Updated find journey from new landing page
+sprint = 'bs2';
 router.get('/' + sprint + '/find', function(req, res) {  
-    sprint = 'bs1';
+    sprint = 'bs2';
     const paginationPerPage = 20;
     let items = global.resources;  
     let searchTerm;
@@ -519,12 +524,77 @@ router.get('/' + sprint + '/find', function(req, res) {
 })
 
 router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
-    sprint = 'bs1';
+    sprint = 'bs2';
     let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
     resource.topic = helpers.enrichTopic(resource.topic);
-    let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/bs1/resource')) ? '/bs1/find' : req.session.current_url;
+    let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/bs2/resource')) ? '/bs2/find' : req.session.current_url;
     req.session.current_url = req.originalUrl;
     res.render(sprint +  "/resource", { sprint: sprint, resource: resource, backLink: backLink });
+})
+
+
+// BETA SPRINT 3 ROUTES
+// Publisher journey
+router.post('/method-answer', function(request, response) {
+
+    var method = request.session.data['method']
+    if (method == "Manual entry"){
+        response.redirect("/bs3/manual/start")
+    } else if (method == "Bulk CSV upload") {
+        response.redirect("/bs3/csv/start")
+    } else {
+        response.redirect("/bs3/api/start")
+    }
+})
+
+router.post('/licence-answer', function(request, response) {
+
+    var licence = request.session.data['metadataLicence']
+    if (licence == "Other"){
+        response.redirect("/bs3/manual/licence-other")
+    } else {
+        response.redirect("/bs3/manual/security-classification")
+    }
+})
+
+router.post('/modified-answer', function(request, response) {
+
+    var modified = request.session.data['MetadataModified']
+    if (modified == "Yes"){
+        response.redirect("/bs3/manual/modified-date")
+    } else {
+        response.redirect("/bs3/manual/related")
+    }
+})
+
+router.post('/type-answer', function(request, response) {
+
+    var assetType = request.session.data['metadataType']
+    if (assetType == "Dataset"){
+        response.redirect("/bs3/manual/frequency")
+    } else {
+        response.redirect("/bs3/manual/endpoint-description")
+    }
+})
+
+router.post('/service-type-answer', function(request, response) {
+
+    var serviceType = request.session.data['MetadataServiceType']
+    if (serviceType == "Other"){
+        response.redirect("/bs3/manual/service-type-other")
+    } else {
+        response.redirect("/bs3/manual/service-status")
+    }
+})
+
+router.post('/distribution-answer', function(request, response) {
+
+    var addAnother = request.session.data['addAnotherDistribution']
+    if (addAnother == "Yes"){
+        response.redirect("/bs3/manual/distribution-2")
+    } else {
+        response.redirect("/bs3/manual/check-answers")
+    }
 })
 
 // End Spints 
@@ -761,7 +831,7 @@ const helpers = {
         const dateObject = new Date(inputDate);
 
         // Format the date using Intl.DateTimeFormat
-        const formattedDate = new Intl.DateTimeFormat("en-US", {
+        const formattedDate = new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",
             month: "long",
             year: "numeric",

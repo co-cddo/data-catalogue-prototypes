@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirmation page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Metadata added to the data catalogue</h1>
+      </div>
+
+      <p>
+        The metadata description for your
+        data asset has been added to the metadata catalogue.
+      </p>
+      <p>
+        It is now available to be found by another government organisation searching for a dataset.
+      </p>
+
+      <a href="/bs3/manual/resource-filled" class="govuk-button" data-module="govuk-button">
+        View metadata record
+      </a>
+
+    </div>
+  </div>
+
+{% endblock %}

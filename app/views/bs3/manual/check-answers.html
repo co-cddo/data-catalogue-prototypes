@@ -1,0 +1,418 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+      <ul class="app-navigation__list app-width-container">
+        <li class="app-navigation__list-item ">
+          <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs3/start-logged-in">
+            Home
+          </a>
+        </li>
+          </li>
+          <li class="app-navigation__list-item app-navigation__list-item--right">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs3/start">
+              Sign out
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{{ govukPhaseBanner({
+  tag: {
+    text: "Beta"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+
+<a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-xl">Check your answers before submitting this metadata record</h1>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Title
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataTitle'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/title">
+              Change
+              <span class="govuk-visually-hidden"> title</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Alternative title
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataAltTitle'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/alternative-title">
+              Change
+              <span class="govuk-visually-hidden"> alternative title</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Description
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataDescription'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/description">
+              Change
+              <span class="govuk-visually-hidden"> description</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Summary
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataSummary'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/summary">
+              Change
+              <span class="govuk-visually-hidden"> summary</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Keyword
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataKeyword'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/keyword">
+              Change
+              <span class="govuk-visually-hidden"> keyword</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Themes
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataThemes'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/theme">
+              Change
+              <span class="govuk-visually-hidden"> themes</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Contact
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataContact'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/contact">
+              Change
+              <span class="govuk-visually-hidden"> contact</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Version
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataVersion'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/version">
+              Change
+              <span class="govuk-visually-hidden"> version</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Access rights
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataAccessRights'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/access-rights">
+              Change
+              <span class="govuk-visually-hidden"> name</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Licence
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataLicence'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/licence">
+              Change
+              <span class="govuk-visually-hidden"> licence</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Security Classification
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['MetadataSecurity'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/security-classification">
+              Change
+              <span class="govuk-visually-hidden"> Security Classification</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Creator
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataCreator'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/creator">
+              Change
+              <span class="govuk-visually-hidden"> creator</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            identifier
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataIdentifier'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/identifier">
+              Change
+              <span class="govuk-visually-hidden"> identifier</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Date Created
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataCreated'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/created">
+              Change
+              <span class="govuk-visually-hidden"> date created</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Modified
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['MetadataModified'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/modified">
+              Change
+              <span class="govuk-visually-hidden"> date modified</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Related data assets 
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataRelated'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/related">
+              Change
+              <span class="govuk-visually-hidden"> Related data assets</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Asset Type
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataType'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/asset-type">
+              Change
+              <span class="govuk-visually-hidden"> asset type</span>
+            </a>
+          </dd>
+        </div> 
+        
+        {% if data['metadataType'] == "Dataset" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Update frequency
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataFrequency'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/frequency">
+              Change
+              <span class="govuk-visually-hidden"> update frequency</span>
+            </a>
+          </dd>
+        </div> 
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Distributions
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataDistribution'] }}.{{ data['metadataDistributionFiletype'] }}
+            {% if data['metadataDistribution2'] %}
+              <br>{{ data['metadataDistribution2'] }}.{{ data['metadataDistributionFiletype2'] }}
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/distribution">
+              Change
+              <span class="govuk-visually-hidden"> distributions</span>
+            </a>
+          </dd>
+        </div> 
+        {% else %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Endpoint description
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataEndpointDescription'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/endpoint-description">
+              Change
+              <span class="govuk-visually-hidden"> endpoint description</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Service Type
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['MetadataServiceType'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/service-type">
+              Change
+              <span class="govuk-visually-hidden"> service type</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Service status
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['MetadataServiceStatus'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/service-status">
+              Change
+              <span class="govuk-visually-hidden"> service status</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Endpoint URL
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataEndpointUrl'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/endpoint-url">
+              Change
+              <span class="govuk-visually-hidden"> endpoint url</span>
+            </a>
+          </dd>
+        </div>        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Data served
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['metadatadataServed'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/bs3/manual/data-served">
+              Change
+              <span class="govuk-visually-hidden"> data served</span>
+            </a>
+          </dd>
+        </div>
+        {% endif %}
+
+
+        
+
+      </dl>
+
+      <h2 class="govuk-heading-m">Now submit your record</h2>
+
+      <p>By submitting this form you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+
+      <form action="/bs3/manual/confirmation" method="post" novalidate>
+
+        <input type="hidden" name="answers-checked" value="true">
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Accept and submit
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

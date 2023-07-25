@@ -1,0 +1,154 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Creator
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+      <ul class="app-navigation__list app-width-container">
+        <li class="app-navigation__list-item ">
+          <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs3/start-logged-in">
+            Home
+          </a>
+        </li>
+          </li>
+          <li class="app-navigation__list-item app-navigation__list-item--right">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs3/start">
+              Sign out
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{{ govukPhaseBanner({
+  tag: {
+    text: "Beta"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+
+<a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        
+      </h1>
+
+      <form class="form" action="/bs3/manual/identifier" method="post">
+
+        {% from "govuk/components/select/macro.njk" import govukSelect %}
+
+        {{ govukSelect({
+          label: {
+            text: "Creator",
+            classes: "govuk-label--l",
+            isPageHeading: true
+          },
+          id: "metadataCreator",
+          name: "metadataCreator",
+          items: [
+    {
+      value: "Department for Business, Energy & Industrial Strategy (BEIS)",
+      text: "Department for Business, Energy & Industrial Strategy (BEIS)"
+    },
+    {
+      value: "Department for Digital, Culture, Media & Sport (DCMS)",
+      text: "Department for Digital, Culture, Media & Sport (DCMS)"
+    },
+    {
+      value: "Department for Education (DfE)",
+      text: "Department for Education (DfE)"
+    },
+    {
+      value: "Department for Environment, Food & Rural Affairs (DEFRA)",
+      text: "Department for Environment, Food & Rural Affairs (DEFRA)"
+    },
+    {
+      value: "Department for International Trade (DIT)",
+      text: "Department for International Trade (DIT)"
+    },
+    {
+      value: "Department for Transport (DfT)",
+      text: "Department for Transport (DfT)"
+    },
+    {
+      value: "Department for Work and Pensions (DWP)",
+      text: "Department for Work and Pensions (DWP)"
+    },
+    {
+      value: "Department of Health and Social Care (DHSC)",
+      text: "Department of Health and Social Care (DHSC)"
+    },
+    {
+      value: "Department of International Development (DFID)",
+      text: "Department of International Development (DFID)"
+    },
+    {
+      value: "Foreign, Commonwealth & Development Office (FCDO)",
+      text: "Foreign, Commonwealth & Development Office (FCDO)"
+    },
+    {
+      value: "Her Majesty's Revenue and Customs (HMRC)",
+      text: "Her Majesty's Revenue and Customs (HMRC)"
+    },
+    {
+      value: "Home Office",
+      text: "Home Office"
+    },
+    {
+      value: "Ministry of Defence (MOD)",
+      text: "Ministry of Defence (MOD)"
+    },
+    {
+      value: "Ministry of Housing, Communities & Local Government (MHCLG)",
+      text: "Ministry of Housing, Communities & Local Government (MHCLG)"
+    },
+    {
+      value: "Ministry of Justice (MOJ)",
+      text: "Ministry of Justice (MOJ)"
+    },
+    {
+      value: "Northern Ireland Executive",
+      text: "Northern Ireland Executive"
+    },
+    {
+      value: "Scotland Office",
+      text: "Scotland Office"
+    },
+    {
+      value: "Wales Office",
+      text: "Wales Office"
+    }
+  ],
+  hint: {
+    text: "The entity responsible for producing the resource."
+  },
+  value: data['metadataCreator']
+
+        }) }}
+
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -20,12 +20,12 @@
       <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
       <ul class="app-navigation__list app-width-container">
         <li class="app-navigation__list-item ">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start-logged-in">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/start-logged-in">
               Home
             </a>
           </li>
           <li class="app-navigation__list-item app-navigation__list-item--right">
-            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs1/start">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/start">
               Sign out
             </a>
           </li>
@@ -35,7 +35,15 @@
 {% endblock %}
 
 {% block beforeContent %}
-  <a class="govuk-back-link" href="/bs1/start-logged-in">Back</a>
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{{ govukPhaseBanner({
+  tag: {
+    text: "Beta"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+
+  <a class="govuk-back-link" href="{{ backLink }}">Back</a>
 {% endblock %}
 
 {% block content %}
@@ -177,11 +185,11 @@
             <div id="js-sort-options" data-ga4-change-category="update-sort select">
                 <div class="govuk-form-group sort-options gem-c-select">
                     <label for="order" class="sort-options__label govuk-label">Sort by</label>
-                    <select class="js-order-results govuk-select sort-options__select" name="order" id="order" aria-controls="js-search-results-info" data-default-sort-option="relevance" data-relevance-sort-option="relevance" data-module="track-select-change" data-track-select-change-module-started="true">
-                        <option value="most-viewed" disabled="" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Most viewed">Most viewed</option>
-                        <option value="relevance" selected="" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Relevance">Relevance</option>
-                        <option value="updated-newest" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (newest)">Updated (newest)</option>
+                    <select class="js-order-results govuk-select sort-options__select" name="order" id="order" aria-controls="js-search-results-info" data-default-sort-option="Updated (newest)" data-relevance-sort-option="Updated (newest)" data-module="track-select-change" data-track-select-change-module-started="true">
+
+                        <option value="updated-newest" selected="" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (newest)">Updated (newest)</option>
                         <option value="updated-oldest" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (oldest)">Updated (oldest)</option>
+                        <option value="relevance" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Relevance">Relevance</option>
                     </select>
                 </div>
             </div>
