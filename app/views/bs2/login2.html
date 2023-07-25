@@ -1,0 +1,123 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+      <ul class="app-navigation__list app-width-container">
+          <li class="app-navigation__list-item ">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/start">
+              Home
+            </a>
+          </li>
+          <li class="app-navigation__list-item app-navigation__list-item--right">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/login2">
+              Sign in
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{{ govukPhaseBanner({
+  tag: {
+    text: "Beta"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+
+  <a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+  Sign in
+</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <p>You need to sign in as the data available is personal, sensitive or  special category.</p>
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+      <form action="/bs2/start-logged-in" method="post" novalidate>
+        {{ govukInput({
+          label: {
+            text: "Email address",
+            isPageHeading: false,
+            classes: ""
+          },
+          classes: "govuk-input--width-20",
+          id: "email",
+          name: "email",
+          type: "email",
+          autocomplete: "email",
+          spellcheck: false
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Password",
+            isPageHeading: false,
+            classes: ""
+          },
+          classes: "govuk-input--width-20",
+          id: "password",
+          name: "password",
+          type: "password"
+        }) }}
+  
+        {{ govukButton({
+          text: "Sign in"
+        }) }}
+      </form>
+
+      <h2 class="govuk-heading-m">New users of Data Marketplace</h2>
+      <div class="govuk-body"><a class="govuk-link" id="no-account" href="#">Create sign in details</a>
+      </div>
+      <h2 class="govuk-heading-m">Problems signing in</h2>
+      <ul class="govuk-list">
+       <li><a class="govuk-link" href="#" id="forgotten-password">I have forgotten my password</a></li>
+       <li><a class="govuk-link" href="#" id="forgotten-user-id">I have forgotten my Government Gateway user ID</a></li>
+       <li><a class="govuk-link" href="#" id="forgotten-user-id-password">I have forgotten my Government Gateway user ID and password</a></li>
+      </ul>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <aside class="app-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Learn more
+        </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+            <li>
+              <a href="#">
+                Knowledge Hub
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Contact Data Marketplace Team
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </div>
+{% endblock %}

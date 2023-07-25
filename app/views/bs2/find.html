@@ -1,0 +1,243 @@
+{% extends "layouts/main.html" %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+
+{% block pageTitle %}
+  Find government data - Sprint 4
+{% endblock %}
+
+
+{% block header %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+      <ul class="app-navigation__list app-width-container">
+        <li class="app-navigation__list-item ">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/start-logged-in">
+              Home
+            </a>
+          </li>
+          <li class="app-navigation__list-item app-navigation__list-item--right">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs2/start">
+              Sign out
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{{ govukPhaseBanner({
+  tag: {
+    text: "Beta"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+
+  <a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+    Find government data
+</h1>
+<form action="{{ thisUrl }}" method="GET" id="searchForm">
+    <div class="gem-c-search gem-c-search--on-white govuk-!-width-two-thirds govuk-!-margin-bottom-4">
+        <label for="search" class="gem-c-search__label govuk-label">Search the Data Catalogue</label>
+        <div class="gem-c-search__item-wrapper">
+            <input  class="gem-c-search__item gem-c-search__input govuk-input js-class-toggle" id="search" name="q" title="Search" type="search" value="{{ query }}">
+                <div class="gem-c-search__item gem-c-search__submit-wrapper">
+                    <button class="gem-c-search__submit" type="submit" enterkeyhint="search">
+                        Search
+                <svg class="gem-c-search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                </svg>
+                </button> 
+            </div>
+        </div>
+    </div>
+
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+
+            
+            <div class="moj-override">
+            {%- set filterOptionsHtml %}
+                {% for filter in filters %}
+                        <div class="app-c-expander" data-module="expander" data-open-on-load="{% if filter.expanded === 'true' %}true{% else %}false{% endif %}">
+                            <h2 class="app-c-expander__heading">
+                            <button type="button" class="app-c-expander__button js-button" aria-expanded="false"
+                                aria-controls="expander-content-{{ filter.id }}">{{ filter.title }}</button>
+                            <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
+                                    class="app-c-expander__icon app-c-expander__icon--up" aria-hidden="true" focusable="false">
+                                <path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path>
+                            </svg>
+                            <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
+                                    class="app-c-expander__icon app-c-expander__icon--down" aria-hidden="true"
+                                    focusable="false">
+                                <path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
+                            </svg>
+                        </h2>
+                        <div class="app-c-expander__content js-content app-c-option-select__container" id="expander-content-{{filter.id}}">
+
+                        {{ govukCheckboxes({
+                            name: filter.title,
+                            classes: "govuk-checkboxes--small js-auto-submit",
+                            attributes: {
+                                "id": filter.id
+                                },
+                            fieldset: {
+                                legend: {
+                                text: filter.title,
+                                classes: "govuk-fieldset__legend--s govuk-visually-hidden"
+                                }
+                            },
+                            items: filter.items
+                            }) }}
+                        
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endset -%}
+
+            {{ mojFilter({
+            heading: {
+                text: ''
+            },
+            selectedFilters: selectedFilters,
+            optionsHtml: filterOptionsHtml
+            }) }}
+            </div>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds" role="region" aria-label="Search results">
+
+            <div class="result-info">
+                <div class="result-info__header">
+                    <h2 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2" id="js-result-count">{{ count }} results</h2>
+                    <div data-track-category="filterClicked" data-track-action="skip-Link" data-track-label="">
+                        <a class="gem-c-skip-link govuk-skip-link govuk-!-display-none-print" data-module="govuk-skip-link" href="#js-results" data-govuk-skip-link-module-started="true">Skip to results</a>
+                    </div>
+                </div>
+                <div id="js-facet-tag-wrapper" class="facet-tags__container" aria-live="assertive">
+                    <div class="moj-override--selected-tags">
+                        {%- set filterOptionsHtml %}
+                            {% for filter in filters %}
+                                    <div class="app-c-expander" data-module="expander" data-open-on-load="{% if filter.expanded === 'true' %}true{% else %}false{% endif %}">
+                                        <h2 class="app-c-expander__heading">
+                                        <button type="button" class="app-c-expander__button js-button" aria-expanded="{% if filter.expanded === 'true' %}true{% else %}false{% endif %}"
+                                            aria-controls="expander-content-{{ filter.id }}">{{ filter.title }}</button>
+                                        <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
+                                                class="app-c-expander__icon app-c-expander__icon--up" aria-hidden="true" focusable="false">
+                                            <path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path>
+                                        </svg>
+                                        <svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
+                                                class="app-c-expander__icon app-c-expander__icon--down" aria-hidden="true"
+                                                focusable="false">
+                                            <path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path>
+                                        </svg>
+                                    </h2>
+                                    <div class="app-c-expander__content js-content {% if filter.expanded === 'true' %}app-c-expander__content--visible{% endif %} app-c-option-select__container" id="expander-content-{{filter.id}}">
+            
+                                    {{ govukCheckboxes({
+                                        name: filter.title,
+                                        classes: "govuk-checkboxes--small js-auto-submit",
+                                        attributes: {
+                                            "id": filter.id
+                                            },
+                                        fieldset: {
+                                            legend: {
+                                            text: filter.title,
+                                            classes: "govuk-fieldset__legend--s govuk-visually-hidden"
+                                            }
+                                        },
+                                        items: filter.items
+                                        }) }}
+                                    
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endset -%}
+            
+                        {{ mojFilter({
+                        heading: {
+                            text: ''
+                        },
+                        selectedFilters: selectedFilters,
+                        optionsHtml: filterOptionsHtml
+                        }) }}
+                        </div>
+                </div>
+            </div>
+
+            <div id="js-sort-options" data-ga4-change-category="update-sort select">
+                <div class="govuk-form-group sort-options gem-c-select">
+                    <label for="order" class="sort-options__label govuk-label">Sort by</label>
+                    <select class="js-order-results govuk-select sort-options__select" name="order" id="order" aria-controls="js-search-results-info" data-default-sort-option="Updated (newest)" data-relevance-sort-option="Updated (newest)" data-module="track-select-change" data-track-select-change-module-started="true">
+
+                        <option value="updated-newest" selected="" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (newest)">Updated (newest)</option>
+                        <option value="updated-oldest" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Updated (oldest)">Updated (oldest)</option>
+                        <option value="relevance" data-track-category="dropDownClicked" data-track-action="clicked" data-track-label="Relevance">Relevance</option>
+                    </select>
+                </div>
+            </div>
+
+
+            {% if resources|length %}
+                <ul class="gem-c-document-list gem-c-document-list--no-underline govuk-!-margin-bottom-5" data-module="edge">
+                    {% for resource in resources %}
+                    <li class="gem-c-document-list__item ">
+                        <a href="./resources/{{ resource.slug | urlencode }}" class="gem-c-document-list__item-title  govuk-link">{{ resource.title}}</a>
+
+                        <p class="govuk-!-font-weight-bold govuk-!-margin-bottom-1 govuk-!-font-size-16">
+                            <span class="govuk-visually-hidden">Organisation: </span>{{ resource.issuing_body_readable }}
+                        </p>
+
+                        <p class="govuk-!-display-inline">
+                            {% for distribution in resource.distributions %}
+                                <strong class="govuk-tag govuk-tag--grey">{{ distribution }}</strong>
+                            {% endfor %}
+                        </p>
+                        
+                        <div class="result-list__limit-height govuk-!-margin-bottom-0 govuk-!-margin-top-1">
+                            <p class="gem-c-document-list__item-description ">{{ resource.description |  replace("\\n\\n", "\n") | safe }}</p>
+                        </div>
+                        <span class="js-result-list-toggle-height govuk-accordion__section-toggle" data-nosnippet=""><span class="govuk-accordion__section-toggle-focus"><span class="govuk-accordion-nav__chevron govuk-accordion-nav__chevron--down"></span><span class="govuk-accordion__section-toggle-text">Show more</span></span></span>
+                        <ul class="gem-c-document-list__item-metadata">
+                            <li class="gem-c-document-list__attribute"> Updated: <time datetime="2016-10-16">{{ resource.dateUpdated}}</time> </li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% include "_includes/pagination.njk" %}
+                
+            {% else %}
+            <div class="no-results govuk-!-font-size-19"> 
+                <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
+                 <p class="govuk-body">Improve your search results by:</p> 
+                 <ul class="govuk-list govuk-list--bullet"> 
+                    <li>removing filters</li> 
+                    <li>double-checking your spelling</li> 
+                    <li>using fewer keywords</li> 
+                    <li>searching for something less specific</li> 
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

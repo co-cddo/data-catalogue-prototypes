@@ -1,0 +1,99 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+  homepageUrl: "/",
+  serviceName: serviceName,
+  serviceUrl: "/",
+  containerClasses: "govuk-width-container"
+}) }}
+    <nav id="app-navigation" class="app-navigation js-app-navigation govuk-clearfix" role="navigation" aria-labelledby="app-navigation-heading">
+      <h2 class="govuk-visually-hidden" id="app-navigation-heading">Menu</h2>
+      <ul class="app-navigation__list app-width-container">
+        <li class="app-navigation__list-item ">
+          <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs3/start-logged-in">
+            Home
+          </a>
+        </li>
+          </li>
+          <li class="app-navigation__list-item app-navigation__list-item--right">
+            <a class="govuk-link govuk-link--no-visited-state govuk-link--no-underline app-navigation__link js-app-navigation__link" href="/bs3/start">
+              Sign out
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+{% endblock %}
+
+{% block beforeContent %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{{ govukPhaseBanner({
+  tag: {
+    text: "Beta"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+
+<a class="govuk-back-link" href="{{ backLink }}">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-xl">You have added 2 distibutions</h1>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        
+        <div class="govuk-summary-list__row">
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataDistribution'] }}.{{ data['metadataDistributionFiletype'] }}
+          </dd>
+        </div>    
+        <div class="govuk-summary-list__row">
+          <dd class="govuk-summary-list__value">
+            {{ data['metadataDistribution2'] }}.{{ data['metadataDistributionFiletype2'] }}
+          </dd>
+        </div>       
+
+      </dl> 
+
+      <form action="/bs3/manual/check-answers" method="post" novalidate>
+
+        {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+        {{ govukRadios({
+          classes: "govuk-radios--inline",
+          name: "addAnotherDistribution",
+          fieldset: {
+            legend: {
+              text: "Would you like to add another distibution?",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No"
+            }
+          ]
+        }) }}
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

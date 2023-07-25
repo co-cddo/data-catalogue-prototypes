@@ -16,12 +16,13 @@ let global = {};
 const init =  async function() {
    global.organisations = await helpers.getData('./app/data/organisations.json');
    global.topics = await helpers.getData('./app/data/topics.json');
+   global.types = await helpers.getData('./app/data/asset-types.json');
    global.resources = [];
    const catalogue = await helpers.getData('./app/data/catalogue.json');
    const mappedCatalogue = helpers.mapLiveSchemaToSpec(catalogue);
    const nhs = await helpers.getData('./app/data/nhs.json');
    const mappedNhs = await helpers.mapLiveSchemaToSpec(nhs.apis, 'nhs-digital', 'health');
-   global.resources =  await global.resources.concat(mappedNhs, mappedCatalogue);
+   global.resources =  await global.resources.concat(mappedCatalogue);
 
    global.index = searchSetup(global.resources);
 }
@@ -433,13 +434,178 @@ router.get('/' + sprint + '/find-2', function(req, res) {
     res.render(sprint + "/find-2", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl, thisUrl: req.baseUrl + req.path });
 })
 
+// BETA SPRINTS 
+
+// BETA SPRINT 1 ROUTES
+// Adding a landing page for all services
+sprint = 'bs1';
+
+
+// BETA SPRINT 2 ROUTES
+// Updated find journey from new landing page
+sprint = 'bs2';
+router.get('/' + sprint + '/find', function(req, res) {  
+    sprint = 'bs2';
+    const paginationPerPage = 20;
+    let items = global.resources;  
+    let searchTerm;
+    let appliedFilters = {};
+    let aggregations = global.index.data.aggregations;
+    let anyFiltersActive = false;
+    let page = '1';
+    if (Object.keys(req.query).length !== 0) {
+        if(req.query.q) {
+            searchTerm = req.query.q;
+        }
+        page = (typeof req.query.page === 'undefined') ? '1' : req.query.page;
+        if(Array.isArray(req.query.organisationFilters)) {
+            anyFiltersActive = true;
+            appliedFilters.issuing_body = req.query.organisationFilters.filter(function(e) {
+                if(e == '_unchecked' || e == req.query.removeFilter) {
+                    return false;
+                }
+                return true;
+            })
+        }
+        if(Array.isArray(req.query.topicFilters)) {
+            appliedFilters.topic = req.query.topicFilters.filter(function(e) {
+                anyFiltersActive = true;
+                if(e == '_unchecked' || e == req.query.removeFilter) {
+                    return false;
+                }
+                return true;
+            })
+        }
+    }
+    const results = s4Search(searchTerm, appliedFilters, paginationPerPage, page);
+    // console.log(JSON.stringify(results, 0, 2));
+    items = results.data.items;
+    aggregations = results.data.aggregations;
+    
+    const filters = [
+        {
+            title: 'Topics',
+            id: 'topicFilters',
+            items: helpers.generateFilterItems(global.topics, 'id', 'name', 'topicFilters', aggregations.topic),
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.topic.buckets)
+        },
+        {
+            title: 'Organisations',
+            id: 'organisationFilters',
+            items: helpers.generateFilterItems(global.organisations, 'id', 'name', 'organisationFilters', aggregations.issuing_body),
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.issuing_body.buckets)
+        },
+        {
+            title: 'Asset Types',
+            id: 'typesFilters',
+            items: helpers.generateFilterItems(global.types, 'id', 'name', 'typesFilters', aggregations.type),
+            expanded: 'true',
+            selectedCount: helpers.getSelectedFiltersCount(aggregations.type.buckets)
+        }
+    ]
+    console.log(JSON.stringify(req.query, null, 2));
+    const pagination = results.pagination;
+    pagination.from = ((pagination.page -1) * pagination.per_page) +1;
+    pagination.to = pagination.page * pagination.per_page;
+    pagination.to = (pagination.total <= pagination.to) ? pagination.total : pagination.to;
+    pagination.numPages = Math.ceil(pagination.total / pagination.per_page);
+    console.log(JSON.stringify(req.originalUrl, null, 2));
+    pagination.items = helpers.getPaginationItems(pagination, req);
+    pagination.next = helpers.getPaginationNext(pagination, req);
+    pagination.previous = helpers.getPaginationPrev(pagination, req);
+    // console.log(JSON.stringify(pagination, null, 2));
+    items = helpers.enrichTopics(items);
+    const clearlinkUrl = helpers.getClearFiltersUrl(req);
+    const selectedFilters = helpers.getSelectedFilters(filters, req.url, clearlinkUrl);
+    req.session.current_url = req.originalUrl;
+    res.render(sprint + "/find", { sprint: sprint, pagination: results.pagination, resources: items, selectedFilters: selectedFilters, count: pagination.total, query: searchTerm, filters: filters, anyFiltersActive: anyFiltersActive, clearlinkUrl: clearlinkUrl, thisUrl: req.baseUrl + req.path });
+})
+
+router.get('/' + sprint + '/resources/:resourceID', function(req, res) {
+    sprint = 'bs2';
+    let resource = global.resources.find(r => r.slug ==  req.params.resourceID);
+    resource.topic = helpers.enrichTopic(resource.topic);
+    let backLink = (req.session.current_url === undefined || req.session.current_url.startsWith('/bs2/resource')) ? '/bs2/find' : req.session.current_url;
+    req.session.current_url = req.originalUrl;
+    res.render(sprint +  "/resource", { sprint: sprint, resource: resource, backLink: backLink });
+})
+
+
+// BETA SPRINT 3 ROUTES
+// Publisher journey
+router.post('/method-answer', function(request, response) {
+
+    var method = request.session.data['method']
+    if (method == "Manual entry"){
+        response.redirect("/bs3/manual/start")
+    } else if (method == "Bulk CSV upload") {
+        response.redirect("/bs3/csv/start")
+    } else {
+        response.redirect("/bs3/api/start")
+    }
+})
+
+router.post('/licence-answer', function(request, response) {
+
+    var licence = request.session.data['metadataLicence']
+    if (licence == "Other"){
+        response.redirect("/bs3/manual/licence-other")
+    } else {
+        response.redirect("/bs3/manual/security-classification")
+    }
+})
+
+router.post('/modified-answer', function(request, response) {
+
+    var modified = request.session.data['MetadataModified']
+    if (modified == "Yes"){
+        response.redirect("/bs3/manual/modified-date")
+    } else {
+        response.redirect("/bs3/manual/related")
+    }
+})
+
+router.post('/type-answer', function(request, response) {
+
+    var assetType = request.session.data['metadataType']
+    if (assetType == "Dataset"){
+        response.redirect("/bs3/manual/frequency")
+    } else {
+        response.redirect("/bs3/manual/endpoint-description")
+    }
+})
+
+router.post('/service-type-answer', function(request, response) {
+
+    var serviceType = request.session.data['MetadataServiceType']
+    if (serviceType == "Other"){
+        response.redirect("/bs3/manual/service-type-other")
+    } else {
+        response.redirect("/bs3/manual/service-status")
+    }
+})
+
+router.post('/distribution-answer', function(request, response) {
+
+    var addAnother = request.session.data['addAnotherDistribution']
+    if (addAnother == "Yes"){
+        response.redirect("/bs3/manual/distribution-2")
+    } else {
+        response.redirect("/bs3/manual/check-answers")
+    }
+})
+
+// End Spints 
+
 
 const searchSetup = function(data) {
     const configuration = {
         sortings: {
             name_dsc: {
-            field: 'title',
-            order: 'dsc'
+            field: 'dateUpdatedOrig',
+            order: 'desc'
             }
         },
         aggregations: {
@@ -450,6 +616,11 @@ const searchSetup = function(data) {
             },
             issuing_body: {
                 title: 'Organisations',
+                size: 30,
+                conjunction: false
+            },
+            type: {
+                title: 'Asset Type',
                 size: 30,
                 conjunction: false
             },
@@ -577,13 +748,14 @@ const helpers = {
         let url = new URL(helpers.getFullUrl(req));
         url.searchParams.set('topicFilters', "_unchecked");
         url.searchParams.set('organisationFilters', "_unchecked");
+        url.searchParams.set('typeFilters', "_unchecked");
         return url;
     },
     getFullUrl(req) {
         const url = req.protocol + '://' + req.get('host') + req.originalUrl
         return url;
     },
-    mapLiveSchemaToSpec(data, issuing_body, topic) {
+    mapLiveSchemaToSpec(data, issuing_body, topic, type) {
         return data.map(function(e) {
             let n = {};
             if(e.data) {
@@ -594,6 +766,9 @@ const helpers = {
                 n.topic = helpers.splitTopics(topic);
                 n.contact = e.data.contact;
                 n.documentation = e.data['documentation-url'];
+                n.distributions = e.data.distributions;
+                n.dateUpdated = e.data.dateUpdated;
+                n.type = e.data.type;
             }
             else {
                 n.title = e.name;
@@ -602,14 +777,21 @@ const helpers = {
                 n.issuing_body_readable = helpers.getOrgTitle(e.provider);
                 n.contact = e.maintainer;
                 n.documentation = e.documentation;
+                n.distributions = e.distributions;
+                n.dateUpdated = e.dateUpdated;
+                n.dateUpdatedOrig = helpers.trueDate(n.dateUpdated);
+                n.dateUpdated = helpers.formatDate(n.dateUpdated);
                 if(e.topic) {
                     n.topic = helpers.splitTopics(e.topic);
                 }
+                n.type = e.type;
+                
             }
             n.url = e.url;
             n.slug = n.title.toLowerCase().replaceAll(' ','-');
             n["Keep?"] = e["Keep?"];
             n['better description'] = e['better description'];
+            // const distList = n.distributions.split(',');
             return n;
         }
         )
@@ -636,6 +818,36 @@ const helpers = {
             }
             return "";
         });
+    },
+    formatDate(inputDate) {
+        // Validate the input date format ("yyyy-mm-dd")
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(inputDate)) {
+            console.log(inputDate);
+            throw new Error("Invalid date format. Expected format: yyyy-mm-dd");
+        }
+
+        // Parse the input date into a JavaScript Date object
+        const dateObject = new Date(inputDate);
+
+        // Format the date using Intl.DateTimeFormat
+        const formattedDate = new Intl.DateTimeFormat("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        }).format(dateObject);
+
+        return formattedDate;
+    },
+    trueDate(inputDate) {
+        function convertToDateObject(dateString) {
+            const [year, month, day] = dateString.split('-').map(Number);
+            return new Date(year, month - 1, day);
+            }
+        const dateStr = inputDate;
+        const dateObj = convertToDateObject(dateStr);
+
+        return dateObj;
     },
     enrichTopics(resources) {
         resources.forEach(function(resource, index) {
